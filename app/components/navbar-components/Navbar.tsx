@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Image from 'next/image';
 import logo from '@/assets/images/logo-white.png';
-import { Bell, BellIcon } from 'lucide-react';
+import { BellIcon } from 'lucide-react';
 import { Badge } from '../ui/badge';
 
 // Navigation links array to be used in both desktop and mobile menus
@@ -68,24 +68,23 @@ const Navbar = () => {
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent align='start' className='w-36 p-1 md:hidden'>
-              <NavigationMenu className='max-w-none *:w-full'>
-                <NavigationMenuList className='flex-col items-start gap-0 md:gap-2'>
-                  {navigationLinks.map((link, index) => (
-                    <NavigationMenuItem key={index} className='w-full'>
-                      <NavigationMenuLink asChild className='py-1.5'>
-                        <Link
-                          onClick={() => setOpenNav(!openNav)}
-                          href={link.href}
-                          className='hover:bg-black hover:text-white'
-                        >
-                          {link.label}
-                        </Link>
-                      </NavigationMenuLink>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
+            <PopoverContent
+              align='start'
+              className='w-full p-1 md:hidden PopoverContent'
+            >
+              <ul className='flex-col items-start gap-0 md:gap-2'>
+                {navigationLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      onClick={() => setOpenNav(!openNav)}
+                      href={link.href}
+                      className='hover:bg-black hover:text-white w-full inline-block p-1.5 rounded transition duration-200 text-sm'
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </PopoverContent>
           </Popover>
           {/* Desktop Logo */}
@@ -107,22 +106,20 @@ const Navbar = () => {
               </Link>
             </div>
             {/* Navigation menu */}
-            <NavigationMenu className='max-md:hidden'>
-              <NavigationMenuList className='gap-2 mt-1'>
-                {navigationLinks.map((link, index) => (
-                  <NavigationMenuItem key={index}>
-                    <NavigationMenuLink
-                      className='text-base px-3 py-2 font-light text-white hover:bg-black hover:text-white'
-                      asChild
+            <div className='max-md:hidden'>
+              <ul className='mt-1 flex flex-row items-center justify-center gap-2'>
+                {navigationLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      className='text-base px-3 py-2 font-light text-white hover:bg-black hover:text-white transition-all duration-200 rounded-md'
+                      href={link.href}
                     >
-                      <Link href={link.href} className=''>
-                        {link.label}
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+                      {link.label}
+                    </Link>
+                  </li>
                 ))}
-              </NavigationMenuList>
-            </NavigationMenu>
+              </ul>
+            </div>
           </div>
         </div>
         {/* Mobile logo */}
