@@ -1,12 +1,7 @@
 'use client';
 import UserMenu from 'app/components/navbar-components/user-menu';
 import { Button } from 'app/components/ui/button';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from 'app/components/ui/navigation-menu';
+
 import {
   Popover,
   PopoverContent,
@@ -18,16 +13,26 @@ import Image from 'next/image';
 import logo from '@/assets/images/logo-white.png';
 import { BellIcon } from 'lucide-react';
 import { Badge } from '../ui/badge';
-
-// Navigation links array to be used in both desktop and mobile menus
-const navigationLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/properties', label: 'Properties' },
-  { href: '/properties/add', label: 'Add Property' },
-];
+import { Separator } from '../ui/separator';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  const baseLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/properties', label: 'Properties' },
+  ];
+
+  const authLinks = isLoggedIn
+    ? [{ href: '/properties/add', label: 'Add Property' }]
+    : [];
+
+  const navigationLinks = [...baseLinks, ...authLinks];
+
   return (
     <nav className='px-4 md:px-6 py-2 bg-blue-700'>
       <div className='flex h-16 items-center justify-between gap-4 max-w-6xl mx-auto'>
@@ -70,27 +75,84 @@ const Navbar = () => {
             </PopoverTrigger>
             <PopoverContent
               align='start'
-              className='w-full p-1 md:hidden PopoverContent'
+              className='w-72 ml-2 px-2 py-4 md:hidden '
             >
               <ul className='flex-col items-start gap-0 md:gap-2'>
                 {navigationLinks.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       onClick={() => setOpenNav(!openNav)}
                       href={link.href}
-                      className='hover:bg-black hover:text-white w-full inline-block p-1.5 rounded transition duration-200 text-sm'
+                      className={cn(
+                        'hover:bg-black/90',
+                        'hover:text-white',
+                        'w-full',
+                        'inline-block',
+                        'rounded-md',
+                        'transition',
+                        'duration-200',
+                        'text-sm',
+                        'p-2',
+                        pathname === link.href && 'bg-black text-white'
+                      )}
                     >
                       {link.label}
                     </Link>
+                    <Separator className='my-1 bg-gray-200' />
                   </li>
                 ))}
+                {/* Google auth */}
+                <div className='space-y-3'>
+                  <li>
+                    <Button
+                      variant='outline'
+                      className='border-[#e84133] text-[#e84133] w-full mt-4 gap-0 cursor-pointer hover:bg-[#ff4f3f] hover:text-white transition duration-200'
+                    >
+                      <Image
+                        src={'/svg/google-logo.svg'}
+                        alt='Google-icon'
+                        width={16}
+                        height={16}
+                      />
+                      <span className='flex flex-1 justify-center'>
+                        Continue with Google
+                      </span>
+                    </Button>
+                  </li>
+
+                  {/* Github auth */}
+                  <li>
+                    <Button
+                      variant='outline'
+                      className='border-black text-black dark:border-white dark:text-white w-full  gap-0 cursor-pointer transition duration-200'
+                    >
+                      <Image
+                        src={'/svg/github-logo.svg'}
+                        alt='Github-icon'
+                        width={16}
+                        height={16}
+                      />
+                      <span className='flex flex-1 justify-center'>
+                        Continue with Github
+                      </span>
+                    </Button>
+                  </li>
+                </div>
               </ul>
             </PopoverContent>
           </Popover>
-          {/* Desktop Logo */}
+          {/* Logo */}
           <div className='flex items-center gap-6'>
-            <div className='flex flex-row items-center justify-center gap-2'>
-              <Link className='hidden md:inline-block' href='/'>
+            <div
+              className={cn(
+                'flex',
+                'flex-row',
+                'items-center',
+                'justify-center',
+                'gap-2'
+              )}
+            >
+              <Link href='/'>
                 <Image
                   className='inline-block'
                   src={logo}
@@ -99,7 +161,7 @@ const Navbar = () => {
                 />
               </Link>
               <Link
-                className='text-2xl text-white font-extrabold mt-0.5 hidden md:inline-block'
+                className='text-2xl text-white font-extrabold mt-0.5'
                 href='/'
               >
                 Emarq
@@ -111,7 +173,19 @@ const Navbar = () => {
                 {navigationLinks.map((link) => (
                   <li key={link.label}>
                     <Link
-                      className='text-base px-3 py-2 font-light text-white hover:bg-black hover:text-white transition-all duration-200 rounded-md'
+                      className={cn(
+                        'text-base',
+                        'px-3',
+                        'py-2',
+                        'font-light',
+                        'text-white',
+                        'hover:bg-black',
+                        'hover:text-white',
+                        'transition-all',
+                        'duration-200',
+                        'rounded-md',
+                        pathname === link.href && 'bg-black text-white'
+                      )}
                       href={link.href}
                     >
                       {link.label}
@@ -122,28 +196,23 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        {/* Mobile logo */}
-        <div className='block md:hidden translate-x-1/2'>
-          <Link className='md:hidden' href='/'>
-            <Image className='' src={logo} alt='logo' width={40} />
-          </Link>
-        </div>
-        {/* Right side */}
-        <div className='flex items-center gap-4'>
-          <Button
-            variant='outline'
-            size='icon'
-            className='relative cursor-pointer bg-black/70  border-0 rounded-full'
-            aria-label='Notifications'
-          >
-            <BellIcon size={16} aria-hidden='true' color='#fff' />
-            <Badge className='h-5 min-w-5 max-w-8 rounded-full absolute -top-2.5 px-1 tabular-nums text-white -right-2  bg-red-600'>
-              2
-            </Badge>
-          </Button>
-          {/* User menu */}
-          <UserMenu />
-        </div>
+        {isLoggedIn && (
+          <div className='flex items-center gap-4'>
+            <Button
+              variant='outline'
+              size='icon'
+              className='relative cursor-pointer bg-black/70 hover:bg-black/50  border-0 rounded-full transition'
+              aria-label='Notifications'
+            >
+              <BellIcon size={16} aria-hidden='true' color='#fff' />
+              <Badge className='h-5 min-w-5 max-w-8 rounded-full absolute -top-2.5 px-1 tabular-nums text-white -right-2  bg-red-600'>
+                2
+              </Badge>
+            </Button>
+            {/* User menu */}
+            <UserMenu />
+          </div>
+        )}
       </div>
     </nav>
   );
