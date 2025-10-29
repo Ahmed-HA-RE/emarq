@@ -4,20 +4,9 @@ import {
   NativeSelectOption,
 } from '@/components/ui/native-select';
 import { Button } from './ui/button';
+import selectOptions from '@/utils/selectOptions';
 
 const Hero = () => {
-  const selectOptions = [
-    { value: 'all', label: 'All' },
-    { value: 'apartment', label: 'Apartment' },
-    { value: 'studio', label: 'Studio' },
-    { value: 'condo', label: 'Condo' },
-    { value: 'house', label: 'House' },
-    { value: 'cabin or cottage', label: 'Cabin or Cottage' },
-    { value: 'loft', label: 'Loft' },
-    { value: 'room', label: 'Room' },
-    { value: 'other', label: 'Other' },
-  ];
-
   return (
     <section className='bg-blue-700 py-20 mb-4'>
       <div className='max-w-7xl mx-auto px-4 sm:px lg:px-8 flex flex-col items-center'>

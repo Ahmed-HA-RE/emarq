@@ -1,0 +1,351 @@
+[
+  {
+    "_id": "1",
+    "owner": "1",
+    "name": "Marina Heights Apartment",
+    "type": "Apartment",
+    "description": "A modern apartment in Dubai Marina with sea views and easy access to JBR Walk.",
+    "location": {
+      "street": "25 Al Marsa Street",
+      "city": "Dubai",
+      "state": "Dubai",
+      "zipcode": "00000"
+    },
+    "beds": 2,
+    "baths": 2,
+    "square_feet": 1450,
+    "amenities": [
+      "Wifi",
+      "Full kitchen",
+      "Washer & Dryer",
+      "Free Parking",
+      "Gym/Fitness Center",
+      "Swimming Pool",
+      "Air Conditioning",
+      "Balcony/Patio",
+      "Smart TV",
+      "24/7 Security"
+    ],
+    "rates": {
+      "monthly": 8000,
+      "weekly": 1000
+    },
+    "seller_info": {
+      "name": "Tariq Haddad",
+      "email": "tariq.haddad@example.com",
+      "phone": "+971-50-555-1234"
+    },
+    "images": ["a1.jpg", "a2.jpg", "a3.jpg"],
+    "is_featured": true,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "2",
+    "owner": "2",
+    "name": "Downtown City Loft",
+    "type": "Apartment",
+    "description": "Cozy loft in the heart of Downtown Dubai with stunning skyline views.",
+    "location": {
+      "street": "Sheikh Mohammed Bin Rashid Blvd",
+      "city": "Dubai",
+      "state": "Dubai",
+      "zipcode": "00000"
+    },
+    "beds": 1,
+    "baths": 1,
+    "square_feet": 1000,
+    "amenities": [
+      "Wifi",
+      "Elevator Access",
+      "Smart TV",
+      "Air Conditioning",
+      "Gym/Fitness Center"
+    ],
+    "rates": {
+      "monthly": 6500
+    },
+    "seller_info": {
+      "name": "Adam Khalil",
+      "email": "adam.khalil@example.com",
+      "phone": "+971-56-111-4455"
+    },
+    "images": ["b1.jpg", "b2.jpg", "b3.jpg"],
+    "is_featured": false,
+    "createdAt": "2025-01-02T00:00:00.000Z",
+    "updatedAt": "2025-01-02T00:00:00.000Z"
+  },
+  {
+    "_id": "3",
+    "owner": "3",
+    "name": "Reem Island Luxury Condo",
+    "type": "Condo",
+    "description": "Enjoy luxury living in this spacious condo on Al Reem Island with waterfront views.",
+    "location": {
+      "street": "Gate Towers",
+      "city": "Abu Dhabi",
+      "state": "Abu Dhabi",
+      "zipcode": "00000"
+    },
+    "beds": 3,
+    "baths": 3,
+    "square_feet": 2200,
+    "amenities": [
+      "Wifi",
+      "Full kitchen",
+      "Swimming Pool",
+      "Balcony/Patio",
+      "24/7 Security",
+      "Gym/Fitness Center",
+      "Smart TV",
+      "Coffee Maker"
+    ],
+    "rates": {
+      "weekly": 11000
+    },
+    "seller_info": {
+      "name": "Omar Darwish",
+      "email": "omar.darwish@example.com",
+      "phone": "+971-55-777-2323"
+    },
+    "images": ["c1.jpg", "c2.jpg", "c3.jpg"],
+    "is_featured": true,
+    "createdAt": "2025-01-03T00:00:00.000Z",
+    "updatedAt": "2025-01-03T00:00:00.000Z"
+  },
+  {
+    "_id": "4",
+    "owner": "4",
+    "name": "Sharjah Corniche Cottage",
+    "type": "Cottage",
+    "description": "A peaceful getaway near the Corniche in Sharjah, perfect for small families.",
+    "location": {
+      "street": "Corniche Street",
+      "city": "Sharjah",
+      "state": "Sharjah",
+      "zipcode": "00000"
+    },
+    "beds": 2,
+    "baths": 1,
+    "square_feet": 1200,
+    "amenities": [
+      "Outdoor Grill/BBQ",
+      "Air Conditioning",
+      "Balcony/Patio",
+      "Coffee Maker"
+    ],
+    "rates": {
+      "nightly": 5000
+    },
+    "seller_info": {
+      "name": "Fadi Mansour",
+      "email": "fadi.mansour@example.com",
+      "phone": "+971-52-333-1212"
+    },
+    "images": ["d1.jpg", "d2.jpg", "d3.jpg"],
+    "is_featured": false,
+    "createdAt": "2025-01-04T00:00:00.000Z",
+    "updatedAt": "2025-01-04T00:00:00.000Z"
+  },
+  {
+    "_id": "5",
+    "owner": "5",
+    "name": "Ajman Corniche Studio",
+    "type": "Studio",
+    "description": "Affordable and modern studio near Ajman Corniche with ocean breeze views.",
+    "location": {
+      "street": "Al Rumaila Street",
+      "city": "Ajman",
+      "state": "Ajman",
+      "zipcode": "00000"
+    },
+    "beds": 1,
+    "baths": 1,
+    "square_feet": 800,
+    "amenities": [
+      "Smart TV",
+      "High-Speed Internet",
+      "Air Conditioning",
+      "Washer & Dryer"
+    ],
+    "rates": {
+      "nightly": 4200
+    },
+    "seller_info": {
+      "name": "Rami Collins",
+      "email": "rami.collins@example.com",
+      "phone": "+971-58-888-4567"
+    },
+    "images": ["e1.jpg", "e2.jpg", "e3.jpg"],
+    "is_featured": false,
+    "createdAt": "2025-01-05T00:00:00.000Z",
+    "updatedAt": "2025-01-05T00:00:00.000Z"
+  },
+  {
+    "_id": "6",
+    "owner": "6",
+    "name": "Palm Jumeirah Beach House",
+    "type": "House",
+    "description": "A beachfront villa on Palm Jumeirah with private pool and direct beach access.",
+    "location": {
+      "street": "Palm Crescent Road",
+      "city": "Dubai",
+      "state": "Dubai",
+      "zipcode": "00000"
+    },
+    "beds": 4,
+    "baths": 4,
+    "square_feet": 3000,
+    "amenities": [
+      "Beach Access",
+      "Private Pool",
+      "Balcony/Patio",
+      "Smart TV",
+      "Outdoor Grill/BBQ"
+    ],
+    "rates": {
+      "monthly": 20000
+    },
+    "seller_info": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "+971-50-777-9876"
+    },
+    "images": ["f1.jpg", "f2.jpg", "f3.jpg"],
+    "is_featured": true,
+    "createdAt": "2025-01-06T00:00:00.000Z",
+    "updatedAt": "2025-01-06T00:00:00.000Z"
+  },
+  {
+    "_id": "7",
+    "owner": "7",
+    "name": "Ras Al Khaimah Desert Retreat",
+    "type": "Villa",
+    "description": "A beautiful desert villa surrounded by dunes, ideal for weekend escapes.",
+    "location": {
+      "street": "Al Wadi Desert Road",
+      "city": "Ras Al Khaimah",
+      "state": "RAK",
+      "zipcode": "00000"
+    },
+    "beds": 3,
+    "baths": 2,
+    "square_feet": 2000,
+    "amenities": [
+      "Fireplace",
+      "Outdoor Grill/BBQ",
+      "Swimming Pool",
+      "Air Conditioning"
+    ],
+    "rates": {
+      "monthly": 7000
+    },
+    "seller_info": {
+      "name": "Samir Reed",
+      "email": "samir.reed@example.com",
+      "phone": "+971-54-999-1212"
+    },
+    "images": ["g1.jpg", "g2.jpg", "g3.jpg"],
+    "is_featured": false,
+    "createdAt": "2025-01-07T00:00:00.000Z",
+    "updatedAt": "2025-01-07T00:00:00.000Z"
+  },
+  {
+    "_id": "8",
+    "owner": "8",
+    "name": "Fujairah Mountain Studio",
+    "type": "Studio",
+    "description": "Stay in a serene mountain studio in Fujairah with panoramic views.",
+    "location": {
+      "street": "Al Hayl Road",
+      "city": "Fujairah",
+      "state": "Fujairah",
+      "zipcode": "00000"
+    },
+    "beds": 3,
+    "baths": 2,
+    "square_feet": 1800,
+    "amenities": ["Fireplace", "Balcony/Patio", "Smart TV", "Mountain View"],
+    "rates": {
+      "monthly": 7500
+    },
+    "seller_info": {
+      "name": "Youssef Ali",
+      "email": "youssef@example.com",
+      "phone": "+971-55-112-3344"
+    },
+    "images": ["h1.jpg", "h2.jpg", "h3.jpg"],
+    "is_featured": false,
+    "createdAt": "2025-01-08T00:00:00.000Z",
+    "updatedAt": "2025-01-08T00:00:00.000Z"
+  },
+  {
+    "_id": "9",
+    "owner": "9",
+    "name": "Al Ain Family Villa",
+    "type": "Villa",
+    "description": "Spacious family villa in Al Ain with private garden and easy access to schools.",
+    "location": {
+      "street": "Zayed Bin Sultan Street",
+      "city": "Al Ain",
+      "state": "Abu Dhabi",
+      "zipcode": "00000"
+    },
+    "beds": 5,
+    "baths": 4,
+    "square_feet": 3500,
+    "amenities": [
+      "Private Garden",
+      "Covered Parking",
+      "Air Conditioning",
+      "Smart TV",
+      "Play Area"
+    ],
+    "rates": {
+      "weekly": 12000
+    },
+    "seller_info": {
+      "name": "Thompson",
+      "email": "thompson@example.com",
+      "phone": "+971-55-987-2233"
+    },
+    "images": ["i1.jpg", "i2.jpg", "i3.jpg"],
+    "is_featured": true,
+    "createdAt": "2025-01-09T00:00:00.000Z",
+    "updatedAt": "2025-01-09T00:00:00.000Z"
+  },
+  {
+    "_id": "10",
+    "owner": "10",
+    "name": "Umm Al Quwain Beach Apartment",
+    "type": "Apartment",
+    "description": "A relaxing beachfront apartment perfect for short-term stays in Umm Al Quwain.",
+    "location": {
+      "street": "Beach Road",
+      "city": "Umm Al Quwain",
+      "state": "UAQ",
+      "zipcode": "00000"
+    },
+    "beds": 2,
+    "baths": 2,
+    "square_feet": 1300,
+    "amenities": [
+      "Beach Access",
+      "Outdoor Grill/BBQ",
+      "Air Conditioning",
+      "Balcony/Patio"
+    ],
+    "rates": {
+      "weekly": 6000
+    },
+    "seller_info": {
+      "name": "Evans",
+      "email": "evans@example.com",
+      "phone": "+971-50-321-9090"
+    },
+    "images": ["j1.jpg", "j2.jpg", "j3.jpg"],
+    "is_featured": false,
+    "createdAt": "2025-01-10T00:00:00.000Z",
+    "updatedAt": "2025-01-10T00:00:00.000Z"
+  }
+]
