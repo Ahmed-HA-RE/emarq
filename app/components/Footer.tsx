@@ -14,15 +14,16 @@ const links = [
 
 const Footer = () => {
   return (
-    <footer className='bg-gray-200 p-4 mt-24'>
+    <footer className='bg-gray-200 p-4'>
       <div className='px-6 flex flex-col md:flex-row items-center space-y-5 md:space-y-0 justify-between max-w-6xl mx-auto'>
         <div>
           <Link
             href='/'
             aria-label='go home'
-            className='mx-auto block size-fit'
+            className='mx-auto size-fit flex flex-row items-center space-x-2'
           >
             <Image src={logo} alt='Logo' width={40} height={40} />
+            <p className='font-extrabold text-black text-2xl mt-0.5'>Emarq</p>
           </Link>
         </div>
 

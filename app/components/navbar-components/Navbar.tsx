@@ -92,13 +92,14 @@ const Navbar = () => {
                         'transition',
                         'duration-200',
                         'text-sm',
-                        'p-2',
+                        'p-3',
+
                         pathname === link.href && 'bg-black text-white'
                       )}
                     >
                       {link.label}
                     </Link>
-                    <Separator className='my-1 bg-gray-200' />
+                    <Separator className='my-1.5 bg-gray-200' />
                   </li>
                 ))}
                 {/* Google auth */}

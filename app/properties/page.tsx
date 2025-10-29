@@ -36,10 +36,10 @@ const PropertiesPage = () => {
         </form>
       </header>
 
-      <section className='p-6 mt-6'>
+      <section className='p-6 my-10'>
         <div className='container'>
           {properties.length === 0 ? (
-            <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6'>
+            <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6 max-w-md mx-auto'>
               <House />
               <AlertTitle>No properties found</AlertTitle>
             </Alert>
