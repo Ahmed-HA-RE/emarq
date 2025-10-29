@@ -1,3 +1,4 @@
+'use client';
 import Hero from './components/Hero';
 import InfoBoxes from '@/components/InfoBoxes';
 import RecentProperties from './components/RecentProperties';
