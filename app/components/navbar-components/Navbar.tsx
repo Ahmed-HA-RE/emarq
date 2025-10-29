@@ -34,8 +34,8 @@ const Navbar = () => {
   const navigationLinks = [...baseLinks, ...authLinks];
 
   return (
-    <nav className='px-4 md:px-6 py-2 bg-blue-700'>
-      <div className='flex h-16 items-center justify-between gap-4 max-w-6xl mx-auto'>
+    <nav className='px-4 md:px-6 py-2 bg-blue-700 border-b border-b-blue-500'>
+      <div className='flex h-16 items-center justify-between gap-4 max-w-7xl mx-auto'>
         {/* Left side */}
         <div className='flex items-center gap-2'>
           {/* Mobile menu trigger */}
@@ -102,7 +102,7 @@ const Navbar = () => {
                   </li>
                 ))}
                 {/* Google auth */}
-                <div className='space-y-3'>
+                <div className='space-y-3 px-1.5'>
                   <li>
                     <Button
                       variant='outline'
