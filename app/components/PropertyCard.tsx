@@ -12,11 +12,11 @@ import Link from 'next/link';
 import { FaBath, FaBed, FaRuler } from 'react-icons/fa';
 import { Banknote, MapPinHouse } from 'lucide-react';
 import { Button } from './ui/button';
-import { PropertyFrontend } from 'type';
-import getPropertyRates from '@/utils/getPropertyRates';
+import { TProperty } from 'type';
+import getPropertyRates from '@/utils/propertyRates';
 
 type PropertyCardProps = {
-  property: PropertyFrontend;
+  property: TProperty;
 };
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
