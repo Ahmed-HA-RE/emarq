@@ -1,5 +1,4 @@
 import { Input } from '@/components/ui/input';
-import properties from '../../properties.json';
 import {
   NativeSelect,
   NativeSelectOption,
@@ -9,8 +8,14 @@ import selectOptions from '@/utils/selectOptions';
 import { House } from 'lucide-react';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import PropertyCard from '@/components/PropertyCard';
+import connectDB from 'config/database';
+import Property from 'models/Property';
+import { PropertyFrontend } from 'type';
 
-const PropertiesPage = () => {
+const PropertiesPage = async () => {
+  await connectDB();
+  const properties = await Property.find({}).lean<PropertyFrontend[]>();
+
   return (
     <>
       <header className='bg-blue-700 p-4 py-6'>

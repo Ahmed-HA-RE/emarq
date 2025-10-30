@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { UserBackend } from 'type';
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<UserBackend>(
   {
     email: {
       type: String,
@@ -17,4 +18,4 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export const User = model('user', UserSchema);
+export const User = model<UserBackend>('user', UserSchema);

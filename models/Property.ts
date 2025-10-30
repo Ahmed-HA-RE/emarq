@@ -1,8 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
+import type { PropertyBackend } from 'type';
 
-const PropertySchema = new Schema(
+const PropertySchema = new Schema<PropertyBackend>(
   {
-    owener: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
     type: { type: String, required: true },
     description: { type: String, required: true, minLength: 4, maxLength: 150 },
@@ -27,10 +28,13 @@ const PropertySchema = new Schema(
       phone: String,
     },
     images: [String],
-    isFeatured: { type: Boolean, default: false },
+    is_featured: { type: Boolean, default: false },
   },
 
   { timestamps: true }
 );
 
-export const User = model('property', PropertySchema);
+const Property =
+  models.property || model<PropertyBackend>('property', PropertySchema);
+
+export default Property;

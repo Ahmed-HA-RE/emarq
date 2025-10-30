@@ -1,12 +1,18 @@
 import PropertyCard from './PropertyCard';
-import properties from '../../properties.json';
 import { Alert, AlertTitle } from './ui/alert';
 import { House } from 'lucide-react';
 import { Button } from './ui/button';
 import Link from 'next/link';
+import connectDB from 'config/database';
+import Property from 'models/Property';
+import { PropertyFrontend } from 'type';
 
-const RecentProperties = () => {
-  const recentProperties = properties.slice(0, 3);
+const RecentProperties = async () => {
+  await connectDB();
+  const recentProperties = await Property.find({})
+    .sort({ createdAt: -1 })
+    .limit(3)
+    .lean<PropertyFrontend[]>();
 
   return (
     <section className='px-4 my-14'>
@@ -14,7 +20,7 @@ const RecentProperties = () => {
         <h2 className='text-3xl text-blue-500 font-bold text-center mb-6'>
           Recent Properties
         </h2>
-        {properties.length === 0 ? (
+        {recentProperties.length === 0 ? (
           <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6 max-w-md mx-auto'>
             <House />
             <AlertTitle>No properties found</AlertTitle>

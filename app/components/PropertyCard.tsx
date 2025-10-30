@@ -12,11 +12,11 @@ import Link from 'next/link';
 import { FaBath, FaBed, FaRuler } from 'react-icons/fa';
 import { Banknote, MapPinHouse } from 'lucide-react';
 import { Button } from './ui/button';
-import { Property } from '@/type';
+import { PropertyFrontend } from 'type';
 import getPropertyRates from '@/utils/getPropertyRates';
 
 type PropertyCardProps = {
-  property: Property;
+  property: PropertyFrontend;
 };
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
@@ -30,6 +30,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           width={0}
           height={0}
           sizes='100%'
+          loading='eager'
         />
         <div className='flex flex-row items-center space-x-1 absolute top-4 right-2 bg-white shadow rounded-md p-2 px-3 text-blue-500 font-semibold'>
           <span className='dirham-symbol '>&#xea;</span>
