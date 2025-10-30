@@ -1,7 +1,6 @@
 import { Schema, model, models } from 'mongoose';
-import type { PropertyBackend } from 'type';
 
-const PropertySchema = new Schema<PropertyBackend>(
+const PropertySchema = new Schema(
   {
     owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
@@ -34,7 +33,6 @@ const PropertySchema = new Schema<PropertyBackend>(
   { timestamps: true }
 );
 
-const Property =
-  models.property || model<PropertyBackend>('property', PropertySchema);
+const Property = models.property || model('property', PropertySchema);
 
 export default Property;

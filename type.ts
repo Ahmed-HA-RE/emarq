@@ -1,8 +1,8 @@
-import { Types } from 'mongoose';
-
 type Rates = 'monthly' | 'weekly' | 'nightly';
 
-export type PropertyCommon = {
+export type TProperty = {
+  _id: string;
+  owner: string;
   name: string;
   type: string;
   description: string;
@@ -27,24 +27,9 @@ export type PropertyCommon = {
   is_featured: boolean;
 };
 
-export type UserCommon = {
+export type TUser = {
   email: string;
   name: string;
   avatar: string;
+  bookmarks: TProperty[];
 };
-
-// Frontend type
-export type PropertyFrontend = PropertyCommon & {
-  _id: string;
-  owner: string;
-};
-
-export type UserFrontend = UserCommon & { bookmarks: string };
-
-// Backend type
-export type PropertyBackend = PropertyCommon & {
-  _id: Types.ObjectId;
-  owner: Types.ObjectId;
-};
-
-export type UserBackend = UserCommon & { bookmarks: Types.ObjectId };

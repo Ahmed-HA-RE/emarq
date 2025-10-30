@@ -10,11 +10,11 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 import PropertyCard from '@/components/PropertyCard';
 import connectDB from 'config/database';
 import Property from 'models/Property';
-import { PropertyFrontend } from 'type';
+import { TProperty } from 'type';
 
 const PropertiesPage = async () => {
   await connectDB();
-  const properties = await Property.find({}).lean<PropertyFrontend[]>();
+  const properties = await Property.find({}).lean<TProperty[]>();
 
   return (
     <>

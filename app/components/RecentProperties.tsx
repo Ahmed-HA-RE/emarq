@@ -5,14 +5,14 @@ import { Button } from './ui/button';
 import Link from 'next/link';
 import connectDB from 'config/database';
 import Property from 'models/Property';
-import { PropertyFrontend } from 'type';
+import { TProperty } from 'type';
 
 const RecentProperties = async () => {
   await connectDB();
   const recentProperties = await Property.find({})
     .sort({ createdAt: -1 })
     .limit(3)
-    .lean<PropertyFrontend[]>();
+    .lean<TProperty[]>();
 
   return (
     <section className='px-4 my-14'>

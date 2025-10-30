@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
-import { UserBackend } from 'type';
 
-const UserSchema = new Schema<UserBackend>(
+const UserSchema = new Schema(
   {
     email: {
       type: String,
@@ -10,12 +9,14 @@ const UserSchema = new Schema<UserBackend>(
     },
     name: { type: String, required: [true, 'Name is required'] },
     avatar: String,
-    bookmarks: {
-      type: Schema.Types.ObjectId,
-      ref: 'Property',
-    },
+    bookmarks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Property',
+      },
+    ],
   },
   { timestamps: true }
 );
 
-export const User = model<UserBackend>('user', UserSchema);
+export const User = model('user', UserSchema);
