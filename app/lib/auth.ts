@@ -4,6 +4,7 @@ import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { nextCookies } from 'better-auth/next-js';
 import { Resend } from 'resend';
 import VerifyEmail from 'emails/VerifyEmail';
+import ResetPassword from 'emails/ResetPassword';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -19,11 +20,31 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 30, // 30 days
   },
 
+  user: {
+    additionalFields: {
+      defaultAvatar: {
+        type: 'string',
+        input: false,
+        defaultValue:
+          'https://res.cloudinary.com/ahmed--dev/image/upload/v1762194054/profile_qjxmpc.png',
+      },
+    },
+  },
+
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
     minPasswordLength: 6,
     maxPasswordLength: 25,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      await resend.emails.send({
+        from: 'support@ahmedrehandev.net',
+        to: user.email,
+        subject: 'Reset your password',
+        react: ResetPassword({ name: user.name, resetPasswordLink: url }),
+      });
+    },
+    resetPasswordTokenExpiresIn: 60 * 60 * 24, // 1 hr
   },
 
   emailVerification: {

@@ -6,6 +6,7 @@ import {
   loginUserSchema,
   RegisterUser,
   registerUserSchema,
+  forgotPasswordSchema,
 } from '@/schema/userSchema';
 import { headers } from 'next/headers';
 
@@ -24,7 +25,7 @@ export const signUpUser = async (values: RegisterUser) => {
         email,
         name,
         password,
-        callbackURL: '/email/verify',
+        callbackURL: '/verify',
       },
       headers: await headers(),
     });
@@ -48,7 +49,7 @@ export const signInUser = async (values: LoginUser) => {
 
     const { email, password } = result.data;
 
-    const data = await auth.api.signInEmail({
+    await auth.api.signInEmail({
       body: {
         email,
         password,
@@ -59,6 +60,32 @@ export const signInUser = async (values: LoginUser) => {
 
     return {
       message: 'Welcome back! You’re now logged in.',
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const requestForgotPass = async (value: string) => {
+  try {
+    const result = forgotPasswordSchema.safeParse({ email: value });
+
+    if (!result.success) {
+      return { error: 'Invalid Data' };
+    }
+
+    const { email } = result.data;
+
+    const data = await auth.api.requestPasswordReset({
+      body: {
+        email,
+        redirectTo: '/reset-password',
+      },
+      headers: await headers(),
+    });
+
+    return {
+      message: data.message,
     };
   } catch (error) {
     throw error;

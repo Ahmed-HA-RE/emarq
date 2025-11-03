@@ -2,43 +2,43 @@
 import { Button } from '@/components/ui/button';
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { LoginUser, loginUserSchema } from '@/schema/userSchema';
+import { ResetPass, resetPasswordSchema } from '@/schema/userSchema';
 import { useForm, Controller } from 'react-hook-form';
-import Link from 'next/link';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { signInUser } from '@/actions/auth';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
-const SignInForm = () => {
+const ResetPasswordForm = ({ token }: { token: string | string[] }) => {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
 
-  const form = useForm<LoginUser>({
-    resolver: zodResolver(loginUserSchema),
+  const form = useForm<ResetPass>({
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: '',
       password: '',
+      confirmPassword: '',
     },
     mode: 'all',
   });
 
-  const onSubmit = async (data: LoginUser) => {
+  const onSubmit = async (data: ResetPass) => {
     try {
       setIsPending(true);
-      const result = await signInUser(data);
 
-      toast.success(result.message, {
+      await authClient.resetPassword({
+        newPassword: data.password,
+        token: token as string,
+      });
+
+      toast.success('Your password has been reset successfully.', {
         style: {
           '--normal-bg':
             'light-dark(var(--color-green-600), var(--color-green-600))',
@@ -48,7 +48,7 @@ const SignInForm = () => {
         } as React.CSSProperties,
       });
 
-      setTimeout(() => router.push('/'), 1000);
+      setTimeout(() => router.push('/signin'), 1000);
     } catch (error: any) {
       toast.error(error.message, {
         style: {
@@ -58,9 +58,9 @@ const SignInForm = () => {
           '--normal-border': 'transparent',
         } as React.CSSProperties,
       });
-    } finally {
-      setIsPending(false);
     }
+
+    setIsPending(false);
   };
 
   return (
@@ -70,31 +70,12 @@ const SignInForm = () => {
     >
       <FieldGroup>
         <div className='flex flex-col items-center gap-2 text-center'>
-          <h1 className='text-3xl font-bold'>Login to your account</h1>
+          <h1 className='text-3xl font-bold'>Reset Password</h1>
           <p className='text-sm text-white opacity-80'>
-            Welcome back! Please sign in to continue.
+            Please enter your current password and choose a new password to
+            update your account security.
           </p>
         </div>
-
-        {/* Email */}
-        <Controller
-          name='email'
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='email'>Email</FieldLabel>
-              <Input
-                id='email'
-                type='email'
-                aria-invalid={fieldState.invalid}
-                placeholder='m@example.com'
-                className='text-white placeholder:text-white focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm'
-                {...field}
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
 
         {/* Password */}
         <Controller
@@ -102,17 +83,27 @@ const SignInForm = () => {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <div className='flex items-center'>
-                <FieldLabel htmlFor='password'>Password</FieldLabel>
-                <Link
-                  href='/forgot-password'
-                  className='ml-auto text-sm underline-offset-4 hover:underline'
-                >
-                  Forgot your password?
-                </Link>
-              </div>
+              <FieldLabel htmlFor='password'>Password</FieldLabel>
               <Input
                 id='password'
+                type='password'
+                className='text-white placeholder:text-white focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm'
+                aria-invalid={fieldState.invalid}
+                {...field}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        {/* Confirm Password */}
+        <Controller
+          name='confirmPassword'
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor='password'>Confirm Password</FieldLabel>
+              <Input
+                id='Confirmpassword'
                 type='password'
                 className='text-white placeholder:text-white focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm'
                 aria-invalid={fieldState.invalid}
@@ -125,35 +116,12 @@ const SignInForm = () => {
 
         <Field>
           <Button disabled={isPending} size={'xl'} type='submit'>
-            {isPending ? <Spinner strokeWidth={1.5} /> : 'Sign In'}
+            {isPending ? <Spinner strokeWidth={1.5} /> : 'Reset Password'}
           </Button>
-        </Field>
-        <FieldSeparator></FieldSeparator>
-        <Field>
-          <div className='flex flex-row md:flex-row items-center justify-center gap-3'>
-            <Button className='bg-[#DB4437] text-white after:flex-1 hover:bg-[#DB4437]/90 text-sm'>
-              <span className='pointer-events-none me-2 flex-1'>
-                <FaGoogle className='opacity-80' size={16} aria-hidden='true' />
-              </span>
-              Sign in with Google
-            </Button>
-            <Button className='bg-black/70 text-white after:flex-1 text-sm'>
-              <span className='pointer-events-none me-2 flex-1'>
-                <FaGithub size={16} aria-hidden='true' />
-              </span>
-              Sign in with Github
-            </Button>
-          </div>
-          <FieldDescription className='px-6 text-center text-white'>
-            Don&apos;t have an account?{' '}
-            <Link className='hover:text-blue-400 transition' href='/signup'>
-              Sign up
-            </Link>
-          </FieldDescription>
         </Field>
       </FieldGroup>
     </form>
   );
 };
 
-export default SignInForm;
+export default ResetPasswordForm;

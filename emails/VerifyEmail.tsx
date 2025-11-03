@@ -18,8 +18,8 @@ import {
 
 const baseUrl =
   process.env.NODE_ENV === 'production'
-    ? 'https://emarq.ahmedrehandev.net'
-    : 'http://localhost:3000';
+    ? `https://${process.env.VERCEL_URL}`
+    : '';
 type VerifyEmailProps = {
   url: string;
   name: string;

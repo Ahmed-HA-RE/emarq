@@ -11,10 +11,20 @@ export const proxy = async (request: NextRequest) => {
     return NextResponse.redirect(new URL('/', request.url));
   } else if (session && request.nextUrl.pathname === '/signin') {
     return NextResponse.redirect(new URL('/', request.url));
-  } else if (!session && request.nextUrl.pathname === '/email/verify') {
+  } else if (!session && request.nextUrl.pathname === '/verify') {
+    return NextResponse.redirect(new URL('/', request.url));
+  } else if (session && request.nextUrl.pathname === '/forgot-password') {
+    return NextResponse.redirect(new URL('/', request.url));
+  } else if (session && request.nextUrl.pathname === '/reset-password') {
     return NextResponse.redirect(new URL('/', request.url));
   }
 };
 export const config = {
-  matcher: ['/signup', '/signin', '/email/verify'],
+  matcher: [
+    '/signup',
+    '/signin',
+    '/email/verify',
+    '/forgot-password',
+    '/reset-password',
+  ],
 };
