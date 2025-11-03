@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
 const Navbar = () => {
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const baseLinks = [
     { href: '/', label: 'Home' },
@@ -78,7 +78,7 @@ const Navbar = () => {
               className='w-72 ml-2 px-2 py-4 md:hidden '
             >
               <ul className='flex-col items-start gap-0 md:gap-2'>
-                {navigationLinks.map((link) => (
+                {navigationLinks.map((link, index) => (
                   <li key={link.label}>
                     <Link
                       onClick={() => setOpenNav(!openNav)}
@@ -99,46 +99,11 @@ const Navbar = () => {
                     >
                       {link.label}
                     </Link>
-                    <Separator className='my-1.5 bg-gray-200' />
+                    {index !== navigationLinks.length - 1 && (
+                      <Separator className='my-1.5 bg-gray-200' />
+                    )}
                   </li>
                 ))}
-                {/* Google auth */}
-                <div className='space-y-3 px-1.5'>
-                  <li>
-                    <Button
-                      variant='outline'
-                      className='border-[#e84133] text-[#e84133] w-full mt-4 gap-0 cursor-pointer hover:bg-[#ff4f3f] hover:text-white transition duration-200'
-                    >
-                      <Image
-                        src={'/svg/google-logo.svg'}
-                        alt='Google-icon'
-                        width={16}
-                        height={16}
-                      />
-                      <span className='flex flex-1 justify-center'>
-                        Continue with Google
-                      </span>
-                    </Button>
-                  </li>
-
-                  {/* Github auth */}
-                  <li>
-                    <Button
-                      variant='outline'
-                      className='border-black text-black dark:border-white dark:text-white w-full  gap-0 cursor-pointer transition duration-200'
-                    >
-                      <Image
-                        src={'/svg/github-logo.svg'}
-                        alt='Github-icon'
-                        width={16}
-                        height={16}
-                      />
-                      <span className='flex flex-1 justify-center'>
-                        Continue with Github
-                      </span>
-                    </Button>
-                  </li>
-                </div>
               </ul>
             </PopoverContent>
           </Popover>
@@ -197,7 +162,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <div className='flex items-center gap-4'>
             <Button
               variant='outline'
@@ -212,6 +177,18 @@ const Navbar = () => {
             </Button>
             {/* User menu */}
             <UserMenu />
+          </div>
+        ) : (
+          <div className='flex flex-row items-center justify-center gap-4'>
+            <Button asChild className='animate-heartbeat bg-black  text-white'>
+              <Link href='/signup'>Sign Up</Link>
+            </Button>
+            <Button
+              asChild
+              className='animate-heartbeat bg-blue-500 hover:bg-blue-600 text-white'
+            >
+              <Link href='/signin'>Sign In</Link>
+            </Button>
           </div>
         )}
       </div>

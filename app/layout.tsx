@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import Navbar from '@/components/navbar-components/Navbar';
 import Footer from '@/components/Footer';
+import { Toaster } from 'sonner';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,6 +24,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Toaster position='top-right' />
       </body>
     </html>
   );
