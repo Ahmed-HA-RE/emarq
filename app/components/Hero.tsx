@@ -5,11 +5,20 @@ import {
 } from '@/components/ui/native-select';
 import { Button } from './ui/button';
 import selectOptions from '@/utils/selectOptions';
+import Aurora from './Aurora';
 
 const Hero = () => {
   return (
-    <section className='bg-blue-700 py-20 mb-4'>
-      <div className='max-w-7xl mx-auto px-4 sm:px lg:px-8 flex flex-col items-center'>
+    <section className='relative py-20 mb-4 md:min-h-[70vh] flex items-center justify-center overflow-hidden'>
+      <div className='absolute inset-0 -z-1'>
+        <Aurora
+          colorStops={['#1944f0', '#1612e2', '#3304f1']}
+          blend={0.5}
+          amplitude={1.1}
+          speed={1.4}
+        />
+      </div>
+      <div className='max-w-7xl mx-auto px-4 sm:px lg:px-8 flex flex-col items-center z-1'>
         <div className='text-center'>
           <h1 className='text-4xl font-bold text-white sm:text-5xl md:text-6xl'>
             Find The Perfect Rental
@@ -33,7 +42,7 @@ const Hero = () => {
           </NativeSelect>
           <Button
             size={'xl'}
-            className='bg-blue-500 hover:bg-blue-600 text-base'
+            className='bg-blue-700 hover:bg-blue-800 text-base'
           >
             Search
           </Button>

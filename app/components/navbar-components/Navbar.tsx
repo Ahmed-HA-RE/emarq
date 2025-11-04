@@ -181,17 +181,9 @@ const Navbar = ({ session }: { session: Session | null }) => {
             <UserMenu session={session} />
           </div>
         ) : (
-          <div className='flex flex-row items-center justify-center gap-4'>
-            <Button asChild className='animate-heartbeat bg-black  text-white'>
-              <Link href='/signup'>Sign Up</Link>
-            </Button>
-            <Button
-              asChild
-              className='animate-heartbeat bg-blue-500 hover:bg-blue-600 text-white'
-            >
-              <Link href='/signin'>Sign In</Link>
-            </Button>
-          </div>
+          <Button asChild className='animate-heartbeat bg-black  text-white'>
+            <Link href='/signup'>Sign Up</Link>
+          </Button>
         )}
       </div>
     </nav>

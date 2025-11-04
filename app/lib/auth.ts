@@ -5,6 +5,7 @@ import { nextCookies } from 'better-auth/next-js';
 import { Resend } from 'resend';
 import VerifyEmail from 'emails/VerifyEmail';
 import ResetPassword from 'emails/ResetPassword';
+import { createAuthMiddleware } from 'better-auth/plugins';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -15,6 +16,13 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,
   }),
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.query?.error === 'access_denied') {
+        throw ctx.redirect('/signin');
+      }
+    }),
+  },
 
   session: {
     expiresIn: 60 * 60 * 24 * 30, // 30 days

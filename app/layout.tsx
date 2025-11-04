@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { Toaster } from 'sonner';
 import { auth } from './lib/auth';
 import { headers } from 'next/headers';
+import VerifyBanner from './components/VerifyBanner';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -27,6 +28,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en'>
       <body className={poppins.className}>
+        {session && !session.user.emailVerified && <VerifyBanner />}
         <Navbar session={session} />
         <main>{children}</main>
         <Footer />
