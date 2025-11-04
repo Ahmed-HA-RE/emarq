@@ -16,18 +16,20 @@ import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { auth } from '@/lib/auth';
 
-const Navbar = () => {
+type Session = typeof auth.$Infer.Session;
+
+const Navbar = ({ session }: { session: Session | null }) => {
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const baseLinks = [
     { href: '/', label: 'Home' },
     { href: '/properties', label: 'Properties' },
   ];
 
-  const authLinks = isLoggedIn
+  const authLinks = session
     ? [{ href: '/properties/add', label: 'Add Property' }]
     : [];
 
@@ -162,7 +164,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        {isLoggedIn ? (
+        {session ? (
           <div className='flex items-center gap-4'>
             <Button
               variant='outline'
@@ -176,7 +178,7 @@ const Navbar = () => {
               </Badge>
             </Button>
             {/* User menu */}
-            <UserMenu />
+            <UserMenu session={session} />
           </div>
         ) : (
           <div className='flex flex-row items-center justify-center gap-4'>

@@ -9,6 +9,7 @@ import {
   forgotPasswordSchema,
 } from '@/schema/userSchema';
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export const signUpUser = async (values: RegisterUser) => {
   try {
@@ -87,6 +88,33 @@ export const requestForgotPass = async (value: string) => {
     return {
       message: data.message,
     };
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const signWithSocials = async (provider: 'github' | 'google') => {
+  try {
+    const result = await auth.api.signInSocial({
+      body: {
+        provider,
+      },
+    });
+
+    if (result.url) {
+      redirect(result.url);
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    await auth.api.signOut({
+      headers: await headers(),
+    });
+    return { message: 'Signed out successfully' };
   } catch (error) {
     throw error;
   }

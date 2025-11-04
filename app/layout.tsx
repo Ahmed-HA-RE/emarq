@@ -4,6 +4,8 @@ import { Poppins } from 'next/font/google';
 import Navbar from '@/components/navbar-components/Navbar';
 import Footer from '@/components/Footer';
 import { Toaster } from 'sonner';
+import { auth } from './lib/auth';
+import { headers } from 'next/headers';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -17,11 +19,15 @@ export const metadata: Metadata = {
     'Discover premium properties across the Emirates with Emarq. Your trusted destination for buying, selling, and renting homes in the UAE.',
 };
 
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
+const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   return (
     <html lang='en'>
       <body className={poppins.className}>
-        <Navbar />
+        <Navbar session={session} />
         <main>{children}</main>
         <Footer />
         <Toaster position='top-right' />
