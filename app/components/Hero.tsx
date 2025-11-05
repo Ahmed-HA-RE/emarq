@@ -31,9 +31,9 @@ const Hero = () => {
         <form className='flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full max-w-2xl mx-auto mt-3'>
           <Input
             placeholder='Enter Location (City, State , Zip etc'
-            className='w-full h-11 bg-white focus-visible:border-blue-400 focus-visible:ring-blue-400 placeholder:text-gray-400 placeholder:text-base md:flex-1/3'
+            className='w-full h-11 bg-white focus-visible:border-blue-400 focus-visible:ring-blue-400 placeholder:text-gray-400 placeholder:text-base'
           />
-          <NativeSelect className='text-black h-11 bg-white text-base md:flex-1/2 focus-visible:border-blue-400 focus-visible:ring-blue-400 w-full'>
+          <NativeSelect className='text-black h-11 bg-white text-base  focus-visible:border-blue-400 focus-visible:ring-blue-400'>
             {selectOptions.map((option) => (
               <NativeSelectOption key={option.value} value={option.value}>
                 {option.label}
