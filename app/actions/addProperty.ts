@@ -8,6 +8,7 @@ import Property from 'models/Property';
 import { revalidatePath } from 'next/cache';
 import connectDB from 'config/database';
 import { redirect } from 'next/navigation';
+import cloudinary from 'config/cloudinary';
 
 export const addProperty = async (data: AddProperty) => {
   await connectDB();
@@ -17,9 +18,29 @@ export const addProperty = async (data: AddProperty) => {
     console.log(z.flattenError(result.error).fieldErrors);
   }
 
-  const imagesFormat = data.images
-    .filter((file) => file.name !== '')
-    .map((file) => file.name);
+  const imagesFile = data.images.filter((file) => file.name !== '');
+
+  const images = await Promise.all(
+    imagesFile.map(async (imageFile) => {
+      const arrayBuffer = await imageFile.arrayBuffer();
+      const buffer = new Uint8Array(arrayBuffer);
+      const imagesURL: any = await new Promise((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream(
+            { folder: 'emarq', public_id: imageFile.name, overwrite: true },
+            function (error, result) {
+              if (error) {
+                reject(error);
+                return;
+              }
+              resolve(result);
+            }
+          )
+          .end(buffer);
+      });
+      return imagesURL.secure_url;
+    })
+  );
 
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -35,8 +56,8 @@ export const addProperty = async (data: AddProperty) => {
     amenities: data.amenities,
     baths: data.baths,
     beds: data.beds,
-    images: imagesFormat,
     location: data.location,
+    images,
     rates: data.rates,
     seller_info: data.seller_info,
     square_feet: data.square_feet,

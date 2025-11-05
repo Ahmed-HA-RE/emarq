@@ -22,11 +22,9 @@ import { Checkbox } from './ui/checkbox';
 import amenitiesOptions from '@/utils/amenitiesCheck';
 import { Button } from './ui/button';
 import { addProperty } from '@/actions/addProperty';
-import { toast } from 'sonner';
 import { Spinner } from './ui/spinner';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { TProperty } from 'type';
 
 const AddPropertyForm = () => {
   const filterselectOptions = selectOptions.filter(
@@ -51,7 +49,6 @@ const AddPropertyForm = () => {
         zipcode: '',
       },
       amenities: [],
-      images: [],
       rates: {
         nightly: 0,
         weekly: 0,
