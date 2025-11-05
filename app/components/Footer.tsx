@@ -7,7 +7,7 @@ const links = [
     href: '/properties',
   },
   {
-    title: 'Terms of Service',
+    title: 'Home',
     href: '/',
   },
 ];

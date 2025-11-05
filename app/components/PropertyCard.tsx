@@ -21,11 +21,11 @@ type PropertyCardProps = {
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
-    <div className='relative rounded-2xl  pt-0 shadow-lg overflow-hidden'>
-      <div className='flex h-70 md:h-64 lg:h-60  relative overflow-hidden'>
+    <div className='relative rounded-2xl pt-0 shadow-lg overflow-hidden'>
+      <div className='flex h-70 md:h-64 lg:h-60 relative overflow-hidden'>
         <Image
-          src={`/properties/${property.images[0]}`}
-          alt=''
+          src={property.images[0]}
+          alt={property.name}
           className='w-full rounded-t-2xl object-cover'
           width={0}
           height={0}
@@ -83,7 +83,10 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         <CardFooter className='justify-between items-start md:items-center gap-4 flex-col md:flex-row'>
           <div className='flex items-center space-x-2 text-orange-700 flex-1/2'>
             <MapPinHouse />
-            <p>Boston MA</p>
+            <p>
+              {property.location.street}, {property.location.state},{' '}
+              {property.location.zipcode}
+            </p>
           </div>
           <Button
             asChild

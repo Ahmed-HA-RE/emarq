@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/card';
 import { MapPin, X } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import PropertyImages from '@/components/PropertyImages';
 
 const PropertyPage = async ({
   params,
@@ -40,7 +41,7 @@ const PropertyPage = async ({
         <>
           <section>
             <Image
-              src={`/properties/${property.images[0]}`}
+              src={property.images[0]}
               alt={property.name}
               width={0}
               height={0}
@@ -68,11 +69,11 @@ const PropertyPage = async ({
             </div>
           </section>
 
-          <section className='mb-6 px-4 bg-blue-50'>
-            <div className='container py-8'>
-              <div className='flex flex-col md:flex-row gap-y-6 gap-x-4'>
+          <section className='px-4 bg-blue-50'>
+            <div className='container py-8 pb-14'>
+              <div className='flex flex-col md:flex-row gap-y-6 gap-x-4 items-start'>
                 {/* Left side */}
-                <div className='grid grid-cols-1 items-center justify-center gap-5 flex-1/2'>
+                <div className='grid grid-cols-1 items-center justify-center gap-5 flex-1/2 w-full'>
                   {/* Property info card */}
                   <Card className='text-center gap-5'>
                     <CardHeader className='gap-3 text-center md:text-left'>
@@ -82,7 +83,7 @@ const PropertyPage = async ({
                       </CardTitle>
                     </CardHeader>
                     <CardContent className='w-full'>
-                      <span className='flex flex-row  md:justify-start  gap-1 mb-6'>
+                      <span className='flex flex-row justify-center md:justify-start gap-1 mb-6'>
                         <MapPin className='text-orange-700' />
                         <p className='text-orange-700'>
                           {property.location.street} {property.location.city},{' '}
@@ -196,6 +197,7 @@ const PropertyPage = async ({
                 {/* Right side */}
                 <aside className='flex-1/4 w-full bg-red-500'></aside>
               </div>
+              <PropertyImages images={property.images} />
             </div>
           </section>
         </>

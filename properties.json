@@ -9,7 +9,7 @@
       "street": "25 Al Marsa Street",
       "city": "Dubai",
       "state": "Dubai",
-      "zipcode": "00000"
+      "zipcode": "20"
     },
     "beds": 2,
     "baths": 2,
@@ -50,7 +50,7 @@
       "street": "Sheikh Mohammed Bin Rashid Blvd",
       "city": "Dubai",
       "state": "Dubai",
-      "zipcode": "00000"
+      "zipcode": "03"
     },
     "beds": 1,
     "baths": 1,
@@ -85,7 +85,7 @@
       "street": "Gate Towers",
       "city": "Abu Dhabi",
       "state": "Abu Dhabi",
-      "zipcode": "00000"
+      "zipcode": "04"
     },
     "beds": 3,
     "baths": 3,
@@ -123,7 +123,7 @@
       "street": "Corniche Street",
       "city": "Sharjah",
       "state": "Sharjah",
-      "zipcode": "00000"
+      "zipcode": "05"
     },
     "beds": 2,
     "baths": 1,
@@ -157,7 +157,7 @@
       "street": "Al Rumaila Street",
       "city": "Ajman",
       "state": "Ajman",
-      "zipcode": "00000"
+      "zipcode": "07"
     },
     "beds": 1,
     "baths": 1,
@@ -191,7 +191,7 @@
       "street": "Palm Crescent Road",
       "city": "Dubai",
       "state": "Dubai",
-      "zipcode": "00000"
+      "zipcode": "08"
     },
     "beds": 4,
     "baths": 4,
@@ -226,7 +226,7 @@
       "street": "Al Wadi Desert Road",
       "city": "Ras Al Khaimah",
       "state": "RAK",
-      "zipcode": "00000"
+      "zipcode": "09"
     },
     "beds": 3,
     "baths": 2,
@@ -260,7 +260,7 @@
       "street": "Al Hayl Road",
       "city": "Fujairah",
       "state": "Fujairah",
-      "zipcode": "00000"
+      "zipcode": "010"
     },
     "beds": 3,
     "baths": 2,
@@ -289,7 +289,7 @@
       "street": "Zayed Bin Sultan Street",
       "city": "Al Ain",
       "state": "Abu Dhabi",
-      "zipcode": "00000"
+      "zipcode": "011"
     },
     "beds": 5,
     "baths": 4,
@@ -321,10 +321,10 @@
     "type": "Apartment",
     "description": "A relaxing beachfront apartment perfect for short-term stays in Umm Al Quwain.",
     "location": {
-      "street": "Beach Road",
+      "street": "River Road",
       "city": "Umm Al Quwain",
       "state": "UAQ",
-      "zipcode": "00000"
+      "zipcode": "012"
     },
     "beds": 2,
     "baths": 2,

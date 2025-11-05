@@ -24,14 +24,12 @@ import { Button } from './ui/button';
 import { addProperty } from '@/actions/addProperty';
 import { Spinner } from './ui/spinner';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 const AddPropertyForm = () => {
   const filterselectOptions = selectOptions.filter(
     (option) => option.value !== 'all'
   );
   const [pending, setPending] = useState(false);
-  const router = useRouter();
 
   const form = useForm<AddProperty>({
     resolver: zodResolver(addPropertySchema),
@@ -49,6 +47,7 @@ const AddPropertyForm = () => {
         zipcode: '',
       },
       amenities: [],
+      images: [],
       rates: {
         nightly: 0,
         weekly: 0,
@@ -60,6 +59,7 @@ const AddPropertyForm = () => {
         phone: '',
       },
     },
+    mode: 'all',
   });
 
   const onSubmit = async (data: AddProperty) => {
@@ -383,7 +383,6 @@ const AddPropertyForm = () => {
                       className='focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm h-9 w-full border-black'
                       type='number'
                       min={0}
-                      max={20}
                     />
 
                     {fieldState.invalid && (
@@ -411,7 +410,6 @@ const AddPropertyForm = () => {
                       className='focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm h-9 w-full border-black'
                       type='number'
                       min={0}
-                      max={20}
                     />
 
                     {fieldState.invalid && (
@@ -439,7 +437,6 @@ const AddPropertyForm = () => {
                       className='focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm h-9 w-full border-black'
                       type='number'
                       min={0}
-                      max={20}
                     />
 
                     {fieldState.invalid && (
@@ -527,6 +524,7 @@ const AddPropertyForm = () => {
                 <FieldLabel htmlFor={field.name}>
                   Images (Select up to 4 images)
                 </FieldLabel>
+
                 <Input
                   id={field.name}
                   aria-invalid={fieldState.invalid}
@@ -541,9 +539,14 @@ const AddPropertyForm = () => {
                     field.onChange(files);
                   }}
                 />
+                {!fieldState.invalid && (
+                  <p className='text-muted-foreground text-end text-xs mt-2'>
+                    Total file size of all selected images must not exceed 10MB.
+                  </p>
+                )}
 
                 {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
+                  <FieldError className='mt-0' errors={[fieldState.error]} />
                 )}
               </Field>
             )}
