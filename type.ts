@@ -17,7 +17,7 @@ export type TProperty = {
   baths: number;
   square_feet: number;
   amenities: string[];
-  rates: Partial<Record<Rates, number>>;
+  rates: Record<Rates, number>;
   seller_info: {
     name: string;
     email: string;

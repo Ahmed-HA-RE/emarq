@@ -33,7 +33,7 @@ const Hero = () => {
             placeholder='Enter Location (City, State , Zip etc'
             className='w-full h-11 bg-white focus-visible:border-blue-400 focus-visible:ring-blue-400 placeholder:text-gray-400 placeholder:text-base md:flex-1/3'
           />
-          <NativeSelect className='text-black h-11 bg-white text-base md:flex-1/2 focus-visible:border-blue-400 focus-visible:ring-blue-400'>
+          <NativeSelect className='text-black h-11 bg-white text-base md:flex-1/2 focus-visible:border-blue-400 focus-visible:ring-blue-400 w-full'>
             {selectOptions.map((option) => (
               <NativeSelectOption key={option.value} value={option.value}>
                 {option.label}

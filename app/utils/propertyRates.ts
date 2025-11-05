@@ -1,13 +1,13 @@
 const getPropertyRates = (
-  rates: Partial<Record<'monthly' | 'weekly' | 'nightly', number>>
+  rates: Record<'monthly' | 'weekly' | 'nightly', number>
 ) => {
-  if (rates.monthly) {
+  if (rates.monthly > 0) {
     return `${rates.monthly.toLocaleString()}/mo`;
   }
-  if (rates.weekly) {
+  if (rates.weekly > 0) {
     return `${rates.weekly.toLocaleString()}/wk`;
   }
-  if (rates.nightly) {
+  if (rates.nightly > 0) {
     return `${rates.nightly.toLocaleString()}/night`;
   }
 };

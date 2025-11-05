@@ -3,7 +3,7 @@ import Property from 'models/Property';
 import type { TProperty } from 'type';
 import Image from 'next/image';
 import { Alert, AlertTitle } from '@/components/ui/alert';
-import { Check, UserRoundXIcon } from 'lucide-react';
+import { Check, Home } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FaArrowLeft, FaBath, FaBed, FaRuler } from 'react-icons/fa6';
@@ -30,10 +30,12 @@ const PropertyPage = async ({
   return (
     <>
       {!property ? (
-        <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6 max-w-md w-full'>
-          <UserRoundXIcon />
-          <AlertTitle>No Property Found</AlertTitle>
-        </Alert>
+        <div className='min-h-screen px-6 py-8'>
+          <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6 max-w-2xl mx-auto w-full'>
+            <Home />
+            <AlertTitle>No Property Found</AlertTitle>
+          </Alert>
+        </div>
       ) : (
         <>
           <section>
@@ -80,7 +82,7 @@ const PropertyPage = async ({
                       </CardTitle>
                     </CardHeader>
                     <CardContent className='w-full'>
-                      <span className='flex flex-row items-center justify-center md:justify-start  gap-1 mb-6'>
+                      <span className='flex flex-row  md:justify-start  gap-1 mb-6'>
                         <MapPin className='text-orange-700' />
                         <p className='text-orange-700'>
                           {property.location.street} {property.location.city},{' '}

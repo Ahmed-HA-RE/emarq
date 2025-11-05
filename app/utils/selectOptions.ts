@@ -1,13 +1,13 @@
 const selectOptions = [
-  { value: 'all', label: 'All' },
-  { value: 'apartment', label: 'Apartment' },
-  { value: 'studio', label: 'Studio' },
-  { value: 'condo', label: 'Condo' },
-  { value: 'house', label: 'House' },
-  { value: 'cabin or cottage', label: 'Cabin or Cottage' },
-  { value: 'villa', label: 'Villa' },
-  { value: 'room', label: 'Room' },
-  { value: 'other', label: 'Other' },
+  { value: 'All', label: 'All' },
+  { value: 'Apartment', label: 'Apartment' },
+  { value: 'Studio', label: 'Studio' },
+  { value: 'Condo', label: 'Condo' },
+  { value: 'House', label: 'House' },
+  { value: 'Cabin or Cottage', label: 'Cabin or Cottage' },
+  { value: 'Villa', label: 'Villa' },
+  { value: 'Room', label: 'Room' },
+  { value: 'Other', label: 'Other' },
 ];
 
 export default selectOptions;
