@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { ForgotPass, forgotPasswordSchema } from '@/schema/userSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldError, FieldLabel } from './ui/field';
+import { destructiveToast, successToast } from '@/utils/toast';
 
 const ForgotPassForm = () => {
   const [isPending, setIsPending] = useState(false);
@@ -28,28 +29,12 @@ const ForgotPassForm = () => {
     try {
       setIsPending(true);
       const result = await requestForgotPass(data.email);
-      console.log(result);
 
-      toast.success(result.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-        } as React.CSSProperties,
-      });
+      successToast(result.message);
 
       setTimeout(() => router.push('/'), 1000);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
     } finally {
       setIsPending(false);
     }

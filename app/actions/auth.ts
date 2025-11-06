@@ -16,7 +16,7 @@ export const signUpUser = async (values: RegisterUser) => {
     const result = registerUserSchema.safeParse(values);
 
     if (!result.success) {
-      return { error: 'Invalid Data' };
+      throw new Error('Invalid Data');
     }
 
     const { email, name, password } = result.data;
@@ -45,7 +45,7 @@ export const signInUser = async (values: LoginUser) => {
     const result = loginUserSchema.safeParse(values);
 
     if (!result.success) {
-      return { error: 'Invalid Data' };
+      throw new Error('Invalid Data');
     }
 
     const { email, password } = result.data;
@@ -72,7 +72,7 @@ export const requestForgotPass = async (value: string) => {
     const result = forgotPasswordSchema.safeParse({ email: value });
 
     if (!result.success) {
-      return { error: 'Invalid Data' };
+      throw new Error('Invalid Data');
     }
 
     const { email } = result.data;

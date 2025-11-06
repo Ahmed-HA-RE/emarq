@@ -11,10 +11,11 @@ import { ResetPass, resetPasswordSchema } from '@/schema/userSchema';
 import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
+
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import { destructiveToast, successToast } from '@/utils/toast';
 
 const ResetPasswordForm = ({ token }: { token: string | string[] }) => {
   const router = useRouter();
@@ -38,29 +39,14 @@ const ResetPasswordForm = ({ token }: { token: string | string[] }) => {
         token: token as string,
       });
 
-      toast.success('Your password has been reset successfully.', {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-        } as React.CSSProperties,
-      });
+      successToast('Your password has been reset successfully.');
 
       setTimeout(() => router.push('/signin'), 1000);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
+    } finally {
+      setIsPending(false);
     }
-
-    setIsPending(false);
   };
 
   return (

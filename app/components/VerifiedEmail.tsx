@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { Spinner } from './ui/spinner';
 import { APIError } from 'better-auth';
+import { destructiveToast, successToast } from '@/utils/toast';
 
 const VerifiedEmail = ({
   expiredToken,
@@ -19,31 +20,17 @@ const VerifiedEmail = ({
     try {
       setIsPending(true);
       const { data: session } = await authClient.getSession();
+
       if (session) {
         await authClient.sendVerificationEmail({
           email: session.user.email,
           callbackURL: '/email/verify',
         });
 
-        toast.success('Verification email sent! Please check your inbox.', {
-          style: {
-            '--normal-bg':
-              'light-dark(var(--color-green-600), var(--color-green-400))',
-            '--normal-text': 'var(--color-white)',
-            '--normal-border':
-              'light-dark(var(--color-green-600), var(--color-green-400))',
-          } as React.CSSProperties,
-        });
+        successToast('Verification email sent! Please check your inbox.');
       }
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
     } finally {
       setIsPending(false);
     }

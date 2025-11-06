@@ -19,6 +19,7 @@ import { toast } from 'sonner';
 import { signInUser, signWithSocials } from '@/actions/auth';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from 'next/navigation';
+import { destructiveToast, successToast } from '@/utils/toast';
 
 const SignInForm = () => {
   const router = useRouter();
@@ -38,14 +39,7 @@ const SignInForm = () => {
       await signWithSocials(provider);
       setTimeout(() => router.push('/'), 1000);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
     }
   };
 
@@ -53,27 +47,10 @@ const SignInForm = () => {
     try {
       setIsPending(true);
       const result = await signInUser(data);
-
-      toast.success(result.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-        } as React.CSSProperties,
-      });
-
+      successToast(result.message);
       setTimeout(() => router.push('/'), 1000);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
     } finally {
       setIsPending(false);
     }

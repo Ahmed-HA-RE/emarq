@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button';
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -19,6 +18,7 @@ import { toast } from 'sonner';
 import { signUpUser, signWithSocials } from '@/actions/auth';
 import { Spinner } from './ui/spinner';
 import { useRouter } from 'next/navigation';
+import { destructiveToast, successToast } from '@/utils/toast';
 
 const SignupForm = () => {
   const router = useRouter();
@@ -40,14 +40,7 @@ const SignupForm = () => {
       await signWithSocials(provider);
       setTimeout(() => router.push('/'), 1000);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
     }
   };
 
@@ -55,32 +48,14 @@ const SignupForm = () => {
     try {
       setIsPending(true);
       const result = await signUpUser(data);
-
-      toast.success(result.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border':
-            'light-dark(var(--color-green-600), var(--color-green-600))',
-        } as React.CSSProperties,
-      });
-
+      successToast(result.message);
       setTimeout(() => router.push('/'), 1000);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
+    } finally {
+      setIsPending(false);
     }
-
-    setIsPending(false);
   };
-
   return (
     <>
       <form

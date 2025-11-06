@@ -22,7 +22,6 @@ import { Checkbox } from './ui/checkbox';
 import amenitiesOptions from '@/utils/amenitiesCheck';
 import { Button } from './ui/button';
 import { addProperty } from '@/actions/addProperty';
-import { Spinner } from './ui/spinner';
 import { useState } from 'react';
 import { TProperty } from 'type';
 import { useRouter } from 'next/navigation';
