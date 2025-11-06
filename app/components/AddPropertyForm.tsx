@@ -24,9 +24,10 @@ import { Button } from './ui/button';
 import { addProperty } from '@/actions/addProperty';
 import { Spinner } from './ui/spinner';
 import { useState } from 'react';
-import { toast } from 'sonner';
 import { TProperty } from 'type';
 import { useRouter } from 'next/navigation';
+import { destructiveToast, successToast } from '@/utils/toast';
+import ScreenSpinner from './ScreenSpinner';
 
 const AddPropertyForm = () => {
   const filterselectOptions = selectOptions.filter(
@@ -70,26 +71,10 @@ const AddPropertyForm = () => {
     try {
       setPending(true);
       const result: TProperty = await addProperty(data);
-      toast.success('Property created', {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--color-green-600), var(--color-green-400))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border':
-            'light-dark(var(--color-green-600), var(--color-green-400))',
-        } as React.CSSProperties,
-      });
-
+      successToast('Property created successfully');
       router.push(`/properties/${result._id}`);
     } catch (error: any) {
-      toast.error(error.message, {
-        style: {
-          '--normal-bg':
-            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
-          '--normal-text': 'var(--color-white)',
-          '--normal-border': 'transparent',
-        } as React.CSSProperties,
-      });
+      destructiveToast(error.message);
     } finally {
       setPending(false);
     }
@@ -97,6 +82,7 @@ const AddPropertyForm = () => {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
+      {pending && <ScreenSpinner />}
       <FieldSet>
         <FieldLegend
           variant='legend'
@@ -588,7 +574,7 @@ const AddPropertyForm = () => {
         type='submit'
         disabled={pending}
       >
-        {pending ? <Spinner /> : 'Add property'}
+        Add property
       </Button>
     </form>
   );

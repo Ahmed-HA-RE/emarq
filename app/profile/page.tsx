@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import Image from 'next/image';
 import connectDB from 'config/database';
 import { headers } from 'next/headers';
+
 import Property from 'models/Property';
 import { TProperty } from 'type';
 import ProfileProperties from '@/components/ProfileProperties';
@@ -20,6 +21,10 @@ const ProfilePage = async () => {
   const properties = await Property.find({ owner: session.user.id }).lean<
     TProperty[]
   >();
+
+  const serializedProperties: TProperty[] = JSON.parse(
+    JSON.stringify(properties)
+  );
 
   return (
     <section className='bg-blue-50'>
@@ -53,7 +58,7 @@ const ProfilePage = async () => {
             <div className='flex-3/4 flex flex-col gap-6'>
               <h2 className='text-2xl font-semibold'>Your Listings</h2>
 
-              {properties.map((property) => (
+              {serializedProperties.map((property) => (
                 <ProfileProperties key={property._id} property={property} />
               ))}
             </div>

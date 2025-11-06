@@ -32,16 +32,13 @@ export const addProperty = async (data: AddProperty) => {
       const buffer = new Uint8Array(arrayBuffer);
       const imagesURL: any = await new Promise((resolve, reject) => {
         cloudinary.uploader
-          .upload_stream(
-            { folder: 'emarq', public_id: imageFile.name, overwrite: true },
-            function (error, result) {
-              if (error) {
-                reject(error);
-                return;
-              }
-              resolve(result);
+          .upload_stream({ folder: 'emarq' }, function (error, result) {
+            if (error) {
+              reject(error);
+              return;
             }
-          )
+            resolve(result);
+          })
           .end(buffer);
       });
       return imagesURL.secure_url;

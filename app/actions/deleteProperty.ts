@@ -1,3 +1,5 @@
+'use server';
+
 import cloudinary from 'config/cloudinary';
 import connectDB from 'config/database';
 import Property from 'models/Property';
@@ -28,11 +30,17 @@ const deleteProperty = async (propertyId: string) => {
     throw new Error('You are not authorized');
   }
 
+  const publicIds: string[] = property.images.map((imageURL: string) => {
+    const parts = imageURL.split('/').at(-1)?.split('.').slice(0, 2).join('.');
+    return parts;
+  });
+
+  for (const publicId of publicIds) {
+    await cloudinary.uploader.destroy(`emarq/${publicId}`);
+  }
+
   await property.deleteOne();
-
-  // const publicIds = property.images.map((imageURL)=>(
-
-  // ))
+  revalidatePath('/', 'layout');
 };
 
 export default deleteProperty;

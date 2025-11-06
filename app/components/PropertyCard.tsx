@@ -81,7 +81,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         </CardContent>
         <Separator />
         <CardFooter className='justify-between items-start md:items-center gap-4 flex-col md:flex-row'>
-          <div className='flex items-center space-x-2 text-orange-700 flex-1/2'>
+          <div className='flex items-center space-x-2 text-orange-700 flex-1/2 text-sm'>
             <MapPinHouse />
             <p>
               {property.location.street}, {property.location.state},{' '}
@@ -90,7 +90,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           </div>
           <Button
             asChild
-            className='bg-blue-500 hover:bg-blue-600 w-full md:flex-1/3'
+            className='bg-blue-500 hover:bg-blue-600 w-full md:flex-1/5'
             size='default'
           >
             <Link href={`/properties/${property._id}`}>Details</Link>
