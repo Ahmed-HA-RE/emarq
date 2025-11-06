@@ -73,3 +73,25 @@ export const addPropertySchema = z.object({
 });
 
 export type AddProperty = z.infer<typeof addPropertySchema>;
+
+export const updatePropertySchema = z.object({
+  name: addPropertySchema.shape.name,
+  type: addPropertySchema.shape.type,
+  description: addPropertySchema.shape.description,
+  location: addPropertySchema.shape.location,
+  rates: addPropertySchema.shape.rates,
+  beds: addPropertySchema.shape.beds,
+  baths: addPropertySchema.shape.baths,
+  square_feet: addPropertySchema.shape.square_feet,
+  seller_info: addPropertySchema.shape.seller_info,
+  amenities: addPropertySchema.shape.amenities,
+  images: z
+    .array(
+      z.file().mime(['image/jpeg', 'image/png'], {
+        error: 'Only extensions JPEG, PNG are supported',
+      })
+    )
+    .max(4, { error: 'Property images must not exceed more than 4 images' }),
+});
+
+export type UpdateProperty = z.infer<typeof updatePropertySchema>;

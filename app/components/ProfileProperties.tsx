@@ -65,7 +65,7 @@ const ProfileProperties = ({ property }: { property: TProperty }) => {
           size={'lg'}
           className='bg-blue-500 text-white rounded-md mr-2 hover:bg-blue-600'
         >
-          <Link href={''}>Edit</Link>
+          <Link href={`/properties/${property._id}/edit`}>Edit</Link>
         </Button>
         <Button
           size={'lg'}

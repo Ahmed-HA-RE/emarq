@@ -7,7 +7,6 @@ import { headers } from 'next/headers';
 import Property from 'models/Property';
 import { revalidatePath } from 'next/cache';
 import connectDB from 'config/database';
-import { redirect } from 'next/navigation';
 import cloudinary from 'config/cloudinary';
 
 export const addProperty = async (data: AddProperty) => {
@@ -15,14 +14,15 @@ export const addProperty = async (data: AddProperty) => {
 
   const result = addPropertySchema.safeParse(data);
   if (!result.success) {
-    console.log(z.flattenError(result.error).fieldErrors);
+    throw new Error('Please make sure everything is filled correctly');
   }
 
   const imagesFile = data.images.filter((file) => file.name !== '');
 
   const filesTotalSize = imagesFile.reduce((a, c) => a + c.size, 0);
+  const maxFileSize = 15 * 1024 * 1024;
 
-  if (filesTotalSize > 15 * 1024 * 1024) {
+  if (filesTotalSize > maxFileSize) {
     throw new Error('Total images size should be less than 15mb');
   }
 
