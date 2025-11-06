@@ -19,6 +19,8 @@ export const proxy = async (request: NextRequest) => {
     return NextResponse.redirect(new URL('/', request.url));
   } else if (!session && request.nextUrl.pathname === '/properties/add') {
     return NextResponse.redirect(new URL('/', request.url));
+  } else if (!session && request.nextUrl.pathname === '/profile') {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 };
 export const config = {
@@ -29,5 +31,6 @@ export const config = {
     '/forgot-password',
     '/reset-password',
     '/properties/add',
+    '/profile',
   ],
 };

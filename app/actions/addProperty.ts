@@ -20,6 +20,12 @@ export const addProperty = async (data: AddProperty) => {
 
   const imagesFile = data.images.filter((file) => file.name !== '');
 
+  const filesTotalSize = imagesFile.reduce((a, c) => a + c.size, 0);
+
+  if (filesTotalSize > 15 * 1024 * 1024) {
+    throw new Error('Total images size should be less than 15mb');
+  }
+
   const images = await Promise.all(
     imagesFile.map(async (imageFile) => {
       const arrayBuffer = await imageFile.arrayBuffer();
@@ -66,5 +72,5 @@ export const addProperty = async (data: AddProperty) => {
   const newProperty = await Property.create(propertyData);
 
   revalidatePath('/', 'layout');
-  redirect(`/properties/${newProperty._id}`);
+  return JSON.parse(JSON.stringify(newProperty));
 };

@@ -26,7 +26,13 @@ const PropertySchema = new Schema(
       email: String,
       phone: String,
     },
-    images: [String],
+    images: {
+      type: [String],
+      validate: {
+        validator: (val: string[]) => val.length <= 4,
+        message: () => 'Images field should not be more than 4.',
+      },
+    },
     is_featured: { type: Boolean, default: false },
   },
 

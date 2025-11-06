@@ -24,12 +24,16 @@ import { Button } from './ui/button';
 import { addProperty } from '@/actions/addProperty';
 import { Spinner } from './ui/spinner';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { TProperty } from 'type';
+import { useRouter } from 'next/navigation';
 
 const AddPropertyForm = () => {
   const filterselectOptions = selectOptions.filter(
     (option) => option.value !== 'all'
   );
   const [pending, setPending] = useState(false);
+  const router = useRouter();
 
   const form = useForm<AddProperty>({
     resolver: zodResolver(addPropertySchema),
@@ -63,8 +67,32 @@ const AddPropertyForm = () => {
   });
 
   const onSubmit = async (data: AddProperty) => {
-    setPending(true);
-    await addProperty(data);
+    try {
+      setPending(true);
+      const result: TProperty = await addProperty(data);
+      toast.success('Property created', {
+        style: {
+          '--normal-bg':
+            'light-dark(var(--color-green-600), var(--color-green-400))',
+          '--normal-text': 'var(--color-white)',
+          '--normal-border':
+            'light-dark(var(--color-green-600), var(--color-green-400))',
+        } as React.CSSProperties,
+      });
+
+      router.push(`/properties/${result._id}`);
+    } catch (error: any) {
+      toast.error(error.message, {
+        style: {
+          '--normal-bg':
+            'light-dark(var(--destructive), color-mix(in oklab, var(--destructive) 60%, var(--background)))',
+          '--normal-text': 'var(--color-white)',
+          '--normal-border': 'transparent',
+        } as React.CSSProperties,
+      });
+    } finally {
+      setPending(false);
+    }
   };
 
   return (
