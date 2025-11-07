@@ -30,7 +30,7 @@ export default function UserMenu({ session }: { session: Session }) {
       icon: <UserCog size={16} aria-hidden='true' />,
     },
     {
-      herf: '/saved-properties',
+      herf: '/properties/saved',
       label: 'Saved Properties',
       icon: <MapPinHouse size={16} aria-hidden='true' />,
     },

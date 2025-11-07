@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { updateUser } from './auth';
 import { revalidatePath } from 'next/cache';
+import mongoose from 'mongoose';
 
 const bookmarkProperty = async (propertyId: string) => {
   await connectDB();
@@ -28,7 +29,10 @@ const bookmarkProperty = async (propertyId: string) => {
     message = 'Bookmark Removed';
     isBookMarked = false;
   } else {
-    const bookmarksProperties = [...session.user.bookmarks, propertyId];
+    const bookmarksProperties = [
+      ...session.user.bookmarks,
+      new mongoose.Types.ObjectId(propertyId),
+    ];
     message = 'Bookmark Added';
     isBookMarked = true;
     await updateUser(bookmarksProperties);

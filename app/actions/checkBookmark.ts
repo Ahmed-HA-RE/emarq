@@ -10,13 +10,7 @@ const checkBookmark = async (propertyId: string) => {
     headers: await headers(),
   });
 
-  if (!session) {
-    throw new Error(
-      'You need to be logged in in order to bookmark this property'
-    );
-  }
-
-  const isBookMarked = session.user.bookmarks.includes(propertyId);
+  const isBookMarked = session?.user.bookmarks.includes(propertyId);
   return isBookMarked;
 };
 

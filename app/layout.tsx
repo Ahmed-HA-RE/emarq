@@ -29,7 +29,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
     <html lang='en'>
       <body className={poppins.className}>
         {session && !session.user.emailVerified && <VerifyBanner />}
-        <Navbar session={session} />
+        <Navbar session={JSON.parse(JSON.stringify(session))} />
         <main>{children}</main>
         <Footer />
         <Toaster position='top-right' />
