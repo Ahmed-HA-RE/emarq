@@ -1,11 +1,5 @@
-import { Input } from '@/components/ui/input';
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from '@/components/ui/native-select';
-import { Button } from './ui/button';
-import selectOptions from '@/utils/selectOptions';
 import Aurora from './Aurora';
+import PropertySearchForm from './PropertySearchForm';
 
 const Hero = () => {
   return (
@@ -27,26 +21,7 @@ const Hero = () => {
             Discover the perfect property that suits your needs.
           </p>
         </div>
-        {/* Form */}
-        <form className='flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full max-w-2xl mx-auto mt-3'>
-          <Input
-            placeholder='Enter Location (City, State , Zip etc'
-            className='w-full h-11 bg-white focus-visible:border-blue-400 focus-visible:ring-blue-400 placeholder:text-gray-400 placeholder:text-base'
-          />
-          <NativeSelect className='text-black h-11 bg-white text-base  focus-visible:border-blue-400 focus-visible:ring-blue-400'>
-            {selectOptions.map((option) => (
-              <NativeSelectOption key={option.value} value={option.value}>
-                {option.label}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
-          <Button
-            size={'xl'}
-            className='bg-blue-700 hover:bg-blue-800 text-base'
-          >
-            Search
-          </Button>
-        </form>
+        <PropertySearchForm />
       </div>
     </section>
   );

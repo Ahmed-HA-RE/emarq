@@ -6,6 +6,9 @@ import { headers } from 'next/headers';
 import Property from 'models/Property';
 import { TProperty } from 'type';
 import ProfileProperties from '@/components/ProfileProperties';
+import { Home } from 'lucide-react';
+import { Alert, AlertTitle } from '@/components/ui/alert';
+import Link from 'next/link';
 
 const ProfilePage = async () => {
   await connectDB();
@@ -57,10 +60,26 @@ const ProfilePage = async () => {
 
             <div className='flex-3/4 flex flex-col gap-6'>
               <h2 className='text-2xl font-semibold'>Your Listings</h2>
-
-              {serializedProperties.map((property) => (
-                <ProfileProperties key={property._id} property={property} />
-              ))}
+              {serializedProperties.length === 0 ? (
+                <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6'>
+                  <Home />
+                  <AlertTitle className='line-clamp-none'>
+                    <p className='inline-block'>
+                      You don&apos;t have any properties listed under your name.
+                    </p>{' '}
+                    <Link
+                      href='/properties/add'
+                      className='underline underline-offset-2 font-bold inline-block'
+                    >
+                      Add Your First Listing
+                    </Link>
+                  </AlertTitle>
+                </Alert>
+              ) : (
+                serializedProperties.map((property) => (
+                  <ProfileProperties key={property._id} property={property} />
+                ))
+              )}
             </div>
           </div>
         </div>
