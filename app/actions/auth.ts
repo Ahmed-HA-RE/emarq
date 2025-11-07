@@ -25,6 +25,7 @@ export const signUpUser = async (values: RegisterUser) => {
       email,
       name,
       password,
+      bookmarks: [],
       callbackURL: '/verify',
     },
     headers: await headers(),
@@ -98,4 +99,13 @@ export const signOutUser = async () => {
     headers: await headers(),
   });
   return { message: 'Signed out successfully' };
+};
+
+export const updateUser = async (propertiesId: string[]) => {
+  await auth.api.updateUser({
+    body: {
+      bookmarks: propertiesId,
+    },
+    headers: await headers(),
+  });
 };

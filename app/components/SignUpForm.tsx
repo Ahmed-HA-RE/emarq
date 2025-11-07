@@ -14,8 +14,7 @@ import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
-import { signUpUser, signWithSocials } from '@/actions/auth';
+import { signUpUser } from '@/actions/auth';
 import { Spinner } from './ui/spinner';
 import { useRouter } from 'next/navigation';
 import { destructiveToast, successToast } from '@/utils/toast';
@@ -34,15 +33,6 @@ const SignupForm = () => {
     },
     mode: 'all',
   });
-
-  const handleSocialsSignIn = async (provider: 'github' | 'google') => {
-    try {
-      await signWithSocials(provider);
-      setTimeout(() => router.push('/'), 1000);
-    } catch (error: any) {
-      destructiveToast(error.message);
-    }
-  };
 
   const onSubmit = async (data: RegisterUser) => {
     try {
@@ -161,34 +151,12 @@ const SignupForm = () => {
           <FieldSeparator></FieldSeparator>
         </FieldGroup>
       </form>
-      <div className='my-5'>
-        <div className='flex flex-row md:flex-row items-center justify-center gap-3'>
-          <Button
-            onClick={() => handleSocialsSignIn('google')}
-            className='bg-[#DB4437] text-white after:flex-1 hover:bg-[#DB4437]/90 text-sm'
-          >
-            <span className='pointer-events-none me-2 flex-1'>
-              <FaGoogle className='opacity-80' size={16} aria-hidden='true' />
-            </span>
-            Sign up with Google
-          </Button>
-          <Button
-            onClick={() => handleSocialsSignIn('github')}
-            className='bg-black/70 text-white after:flex-1 text-sm'
-          >
-            <span className='pointer-events-none me-2 flex-1'>
-              <FaGithub size={16} aria-hidden='true' />
-            </span>
-            Sign up with Github
-          </Button>
-        </div>
-        <span className='px-6 text-center text-white mt-3 text-sm w-full inline-block'>
-          Already have an account?{' '}
-          <Link className='hover:text-blue-400 transition' href='/signin'>
-            Sign in
-          </Link>
-        </span>
-      </div>
+      <span className='px-6 text-center text-white mt-3 text-sm w-full inline-block my-5'>
+        Already have an account?{' '}
+        <Link className='hover:text-blue-400 transition' href='/signin'>
+          Sign in
+        </Link>
+      </span>
     </>
   );
 };

@@ -7,10 +7,10 @@ const PropertyImages = ({ images }: { images: string[] }) => {
       width={0}
       height={0}
       sizes='100%'
-      className='h-[400px] w-full object-cover mt-10'
+      className='h-[400px] w-full object-cover md:mt-10'
     />
   ) : (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-5 md:mt-10'>
+    <div className='grid grid-cols-1 md:grid-cols-2 gap-4 md:mt-10 '>
       {images.map((image, index) => (
         <Image
           key={index}

@@ -4,6 +4,7 @@ import type { TProperty } from 'type';
 import Image from 'next/image';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Check, Home } from 'lucide-react';
+import { FaShare } from 'react-icons/fa';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FaArrowLeft, FaBath, FaBed, FaRuler } from 'react-icons/fa6';
@@ -18,6 +19,10 @@ import { MapPin, X } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import PropertyImages from '@/components/PropertyImages';
 import PropertyMap from '@/components/PropertyMap';
+import PropertyContactForm from '@/components/PropertyContactForm';
+import BookmarkButton from '@/components/BookmarkButton';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 const PropertyPage = async ({
   params,
@@ -25,8 +30,12 @@ const PropertyPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-
   await connectDB();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   const property = await Property.findById(id).lean();
   const serializedProperty: TProperty = JSON.parse(JSON.stringify(property));
 
@@ -73,7 +82,7 @@ const PropertyPage = async ({
 
           <section className='px-4 bg-blue-50'>
             <div className='container py-8 pb-14'>
-              <div className='flex flex-col md:flex-row gap-y-6 gap-x-4 items-start'>
+              <div className='flex flex-col md:flex-row gap-y-8 gap-x-4 items-start'>
                 {/* Left side */}
                 <div className='grid grid-cols-1 items-center justify-center gap-5 flex-1/2 w-full'>
                   {/* Property info card */}
@@ -207,7 +216,18 @@ const PropertyPage = async ({
                   </Card>
                 </div>
                 {/* Right side */}
-                <aside className='flex-1/4 w-full bg-red-500'></aside>
+                <aside className='flex-1/5 w-full mb-15 space-y-4'>
+                  <BookmarkButton property={serializedProperty} />
+                  <Button
+                    size={'lg'}
+                    className='w-full bg-orange-500 hover:bg-orange-600 rounded-full font-bold'
+                  >
+                    <FaShare />
+                    Share Property
+                  </Button>
+
+                  <PropertyContactForm />
+                </aside>
               </div>
               <PropertyImages images={serializedProperty.images} />
             </div>

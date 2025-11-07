@@ -36,6 +36,11 @@ export const auth = betterAuth({
         defaultValue:
           'https://res.cloudinary.com/ahmed--dev/image/upload/v1762194054/profile_qjxmpc.png',
       },
+      bookmarks: {
+        type: 'string[]',
+        input: true,
+        defaultValue: [],
+      },
     },
   },
 
