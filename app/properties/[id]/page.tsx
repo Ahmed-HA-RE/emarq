@@ -17,6 +17,7 @@ import {
 import { MapPin, X } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import PropertyImages from '@/components/PropertyImages';
+import PropertyMap from '@/components/PropertyMap';
 
 const PropertyPage = async ({
   params,
@@ -26,11 +27,12 @@ const PropertyPage = async ({
   const { id } = await params;
 
   await connectDB();
-  const property = await Property.findById(id).lean<TProperty>();
+  const property = await Property.findById(id).lean();
+  const serializedProperty: TProperty = JSON.parse(JSON.stringify(property));
 
   return (
     <>
-      {!property ? (
+      {!serializedProperty ? (
         <div className='min-h-screen px-6 py-8'>
           <Alert className='border-destructive bg-destructive/10 text-destructive rounded-none border-0 border-l-6 max-w-2xl mx-auto w-full'>
             <Home />
@@ -41,8 +43,8 @@ const PropertyPage = async ({
         <>
           <section>
             <Image
-              src={property.images[0]}
-              alt={property.name}
+              src={serializedProperty.images[0]}
+              alt={serializedProperty.name}
               width={0}
               height={0}
               sizes='100%'
@@ -77,18 +79,20 @@ const PropertyPage = async ({
                   {/* Property info card */}
                   <Card className='text-center gap-5'>
                     <CardHeader className='gap-3 text-center md:text-left'>
-                      <p className='text-base text-gray-500'>{property.type}</p>
+                      <p className='text-base text-gray-500'>
+                        {serializedProperty.type}
+                      </p>
                       <CardTitle className='text-3xl md:text-3xl font-bold'>
-                        {property.name}
+                        {serializedProperty.name}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className='w-full'>
                       <span className='flex flex-row justify-center md:justify-start gap-1 mb-6'>
                         <MapPin className='text-orange-700' />
                         <p className='text-orange-700'>
-                          {property.location.street} {property.location.city},{' '}
-                          {''}
-                          {property.location.zipcode}
+                          {serializedProperty.location.street}{' '}
+                          {serializedProperty.location.city}, {''}
+                          {serializedProperty.location.zipcode}
                         </p>
                       </span>
                       <div className='bg-gray-800 text-white p-2.5 text-lg font-semibold text-center md:text-left mb-7'>
@@ -101,10 +105,10 @@ const PropertyPage = async ({
                           <span className='text-gray-500 font-medium'>
                             Nightly
                           </span>
-                          {property.rates.nightly ? (
+                          {serializedProperty.rates.nightly ? (
                             <div className='flex flex-row items-center space-x-1 text-blue-500 text-lg'>
                               <span className='dirham-symbol '>&#xea;</span>
-                              <p>{property.rates.nightly}</p>
+                              <p>{serializedProperty.rates.nightly}</p>
                             </div>
                           ) : (
                             <X className='text-red-600' />
@@ -117,10 +121,10 @@ const PropertyPage = async ({
                           <span className='text-gray-500 font-medium'>
                             Monthly
                           </span>
-                          {property.rates.monthly ? (
+                          {serializedProperty.rates.monthly ? (
                             <div className='flex flex-row items-center space-x-1 text-blue-500 text-lg'>
                               <span className='dirham-symbol'>&#xea;</span>
-                              <p>{property.rates.monthly}</p>
+                              <p>{serializedProperty.rates.monthly}</p>
                             </div>
                           ) : (
                             <X className='text-red-600' />
@@ -132,10 +136,10 @@ const PropertyPage = async ({
                           <span className='text-gray-500 font-medium'>
                             Weekly
                           </span>
-                          {property.rates.weekly ? (
+                          {serializedProperty.rates.weekly ? (
                             <div className='flex flex-row items-center space-x-1 text-blue-500 text-lg'>
                               <span className='dirham-symbol'>&#xea;</span>
-                              <p>{property.rates.weekly}</p>
+                              <p>{serializedProperty.rates.weekly}</p>
                             </div>
                           ) : (
                             <X className='text-red-600' />
@@ -151,28 +155,30 @@ const PropertyPage = async ({
                       <CardTitle className='text-lg'>
                         Description & Details
                       </CardTitle>
-                      <CardDescription>{property.description}</CardDescription>
+                      <CardDescription>
+                        {serializedProperty.description}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className='flex flex-wrap items-center justify-center gap-4'>
                       <span className='text-blue-500 flex flex-row items-center space-x-1.5'>
                         <FaBed size={25} />
                         <p className='text-lg'>
-                          {property.beds > 1
-                            ? `${property.beds} Beds`
-                            : `${property.beds} Bed`}
+                          {serializedProperty.beds > 1
+                            ? `${serializedProperty.beds} Beds`
+                            : `${serializedProperty.beds} Bed`}
                         </p>
                       </span>
                       <span className='text-blue-500 flex flex-row items-center space-x-1.5'>
                         <FaBath size={20} />
                         <p className='text-lg'>
-                          {property.baths > 1
-                            ? `${property.baths} Baths`
-                            : `${property.baths} Bath`}
+                          {serializedProperty.baths > 1
+                            ? `${serializedProperty.baths} Baths`
+                            : `${serializedProperty.baths} Bath`}
                         </p>
                       </span>
                       <span className='text-blue-500 flex flex-row items-center space-x-1.5'>
                         <FaRuler size={22} />
-                        <p>{property.square_feet} sqft </p>
+                        <p>{serializedProperty.square_feet} sqft </p>
                       </span>
                     </CardContent>
                   </Card>
@@ -184,7 +190,7 @@ const PropertyPage = async ({
                     </CardHeader>
                     <CardContent>
                       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-between gap-2'>
-                        {property.amenities.map((amenity, index) => (
+                        {serializedProperty.amenities.map((amenity, index) => (
                           <li key={index}>
                             <Check className='inline-block text-green-600' />{' '}
                             {amenity}
@@ -193,11 +199,17 @@ const PropertyPage = async ({
                       </ul>
                     </CardContent>
                   </Card>
+                  {/* Map */}
+                  <Card className='p-0'>
+                    <CardContent className='p-0'>
+                      <PropertyMap property={serializedProperty} />
+                    </CardContent>
+                  </Card>
                 </div>
                 {/* Right side */}
                 <aside className='flex-1/4 w-full bg-red-500'></aside>
               </div>
-              <PropertyImages images={property.images} />
+              <PropertyImages images={serializedProperty.images} />
             </div>
           </section>
         </>
