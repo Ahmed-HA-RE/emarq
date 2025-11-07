@@ -30,7 +30,10 @@ const BookmarkButton = ({ property }: { property: TProperty }) => {
     const fetchBookmarkedStatus = async () => {
       try {
         const isBookmarked = await checkBookmark(property._id);
-        setIsBookmarked(isBookmarked);
+
+        if (isBookmarked) {
+          setIsBookmarked(isBookmarked);
+        }
       } catch (error: any) {
         destructiveToast(error.message);
       }

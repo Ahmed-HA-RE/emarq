@@ -23,6 +23,7 @@ import PropertyContactForm from '@/components/PropertyContactForm';
 import BookmarkButton from '@/components/BookmarkButton';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import ShareButtons from '@/components/ShareButtons';
 
 const PropertyPage = async ({
   params,
@@ -31,10 +32,6 @@ const PropertyPage = async ({
 }) => {
   const { id } = await params;
   await connectDB();
-
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
 
   const property = await Property.findById(id).lean();
   const serializedProperty: TProperty = JSON.parse(JSON.stringify(property));
@@ -216,15 +213,9 @@ const PropertyPage = async ({
                   </Card>
                 </div>
                 {/* Right side */}
-                <aside className='flex-1/5 w-full mb-15 space-y-4'>
+                <aside className='flex-1/5 w-full mb-15 space-y-7'>
                   <BookmarkButton property={serializedProperty} />
-                  <Button
-                    size={'lg'}
-                    className='w-full bg-orange-500 hover:bg-orange-600 rounded-full font-bold'
-                  >
-                    <FaShare />
-                    Share Property
-                  </Button>
+                  <ShareButtons property={serializedProperty} />
 
                   <PropertyContactForm />
                 </aside>
