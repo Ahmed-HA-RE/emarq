@@ -13,10 +13,23 @@ import ScreenSpinner from './ScreenSpinner';
 import { useState } from 'react';
 import { markMessage } from '@/actions/markMessage';
 import { Badge } from './ui/badge';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from './ui/alert-dialog';
+import { TriangleAlertIcon } from 'lucide-react';
+import deleteMessage from '@/actions/deleteMessage';
 
 const MessageCard = ({ message }: { message: MessagesResults }) => {
   const [pending, setPending] = useState(false);
   const [isRead, setIsRead] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const handleReadToggle = async () => {
     try {
@@ -31,10 +44,22 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
     }
   };
 
+  const handleDeleteMessage = async () => {
+    try {
+      setPending(true);
+      await deleteMessage(message._id);
+      successToast('Message Deleted');
+    } catch (error: any) {
+      destructiveToast(error.message);
+    } finally {
+      setPending(false);
+    }
+  };
+
   return (
     <>
       {pending && <ScreenSpinner />}
-      <Card key={message._id} className='rounded-md gap-1 py-4 relative'>
+      <Card key={message._id} className='rounded-md gap-1 py-4 relative mb-4'>
         <CardHeader className='px-4 '>
           <CardTitle className='!text-xl md:!text-2xl leading-8'>
             Property Inquiry:{' '}
@@ -76,7 +101,10 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
           >
             {isRead ? 'Mark As New' : 'Mark As Read'}
           </Button>
-          <Button className='h-9 px-3 bg-red-500 hover:bg-red-600'>
+          <Button
+            onClick={() => setModal(true)}
+            className='h-9 px-3 bg-red-500 hover:bg-red-600'
+          >
             Delete
           </Button>
         </CardFooter>
@@ -90,6 +118,33 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
           </Badge>
         )}
       </Card>
+      <AlertDialog open={modal} onOpenChange={setModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader className='items-center'>
+            <div className='bg-destructive/10 mx-auto mb-2 flex size-12 items-center justify-center rounded-full'>
+              <TriangleAlertIcon className='text-destructive size-6' />
+            </div>
+            <AlertDialogTitle>
+              Are you sure you want to delete?
+            </AlertDialogTitle>
+            <AlertDialogDescription className='text-center'>
+              This action cannot be undone. This will permanently delete your
+              message and remove it from your listing.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setModal(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteMessage}
+              className='bg-destructive dark:bg-destructive/60 hover:bg-destructive focus-visible:ring-destructive text-white'
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
