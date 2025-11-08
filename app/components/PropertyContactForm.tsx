@@ -14,7 +14,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
-import { Send } from 'lucide-react';
+import { CircleAlertIcon, Send } from 'lucide-react';
 import { messageSchema } from '@/schema/messageSchema';
 import { TMessage, TProperty } from 'type';
 import { destructiveToast, successToast } from '@/utils/toast';
@@ -22,6 +22,7 @@ import { sendMessage } from '@/actions/addMessage';
 import { auth } from '@/lib/auth';
 import { useState } from 'react';
 import ScreenSpinner from './ScreenSpinner';
+import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 
 type PropertyContactFormProps = {
   property: TProperty;
@@ -37,13 +38,10 @@ const PropertyContactForm = ({
   const form = useForm<TMessage>({
     resolver: zodResolver(messageSchema),
     defaultValues: {
-      name: '',
-      email: '',
       phone: '',
       message: '',
       reciver: property.owner,
       property: property._id,
-      sender: session?.user.id,
     },
     mode: 'all',
   });
@@ -65,8 +63,8 @@ const PropertyContactForm = ({
   return (
     <>
       {isPending && <ScreenSpinner />}
-      {session && (
-        <Card>
+      {session && session?.user.emailVerified ? (
+        <Card className='w-full'>
           <CardContent>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FieldSet>
@@ -74,49 +72,6 @@ const PropertyContactForm = ({
                   Contact Property Manager
                 </FieldLegend>
                 <FieldGroup>
-                  {/* Name */}
-                  <Controller
-                    name='name'
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor='name'>Full Name</FieldLabel>
-                        <Input
-                          id='name'
-                          type='text'
-                          aria-invalid={fieldState.invalid}
-                          placeholder='Name'
-                          className='text-black placeholder:text-black focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm'
-                          {...field}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                  {/* Email */}
-                  <Controller
-                    name='email'
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor='email'>Email</FieldLabel>
-                        <Input
-                          id='email'
-                          type='email'
-                          aria-invalid={fieldState.invalid}
-                          placeholder='m@example.com'
-                          className='text-black placeholder:text-black focus-visible:ring-blue-500 focus-visible:border-blue-500 text-sm'
-                          {...field}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-
                   {/* Phone */}
                   <Controller
                     name='phone'
@@ -177,6 +132,17 @@ const PropertyContactForm = ({
             </form>
           </CardContent>
         </Card>
+      ) : !session?.user.emailVerified ? (
+        <Alert className='border-sky-600 text-sky-600 w-full dark:border-sky-400 dark:text-sky-400'>
+          <CircleAlertIcon />
+          <AlertTitle>Verify your email address</AlertTitle>
+          <AlertDescription className='text-sky-600/80 dark:text-sky-400/80'>
+            Verify your email to contact the property owner, start selling, and
+            receive inquiries about the property.
+          </AlertDescription>
+        </Alert>
+      ) : (
+        ''
       )}
     </>
   );

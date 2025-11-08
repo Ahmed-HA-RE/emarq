@@ -23,11 +23,10 @@ export const sendMessage = async (data: TMessage) => {
   }
 
   await Message.create({
-    sender: session.user.id,
     receiver,
     property: data.property,
-    name: data.name,
-    email: data.email,
+    name: session.user.name,
+    email: session.user.email,
     phone: data.phone,
     body: data.message,
   });

@@ -35,11 +35,21 @@ export type TUser = {
 };
 
 export type TMessage = {
-  sender: string;
   reciver: string;
   property: string;
-  name: string;
-  email: string;
   phone: string;
   message: string;
+};
+
+export type MessagesResults = {
+  _id: string;
+  name: string;
+  email: string;
+  property: {
+    name: string;
+  };
+  phone: string;
+  body: string;
+  createdAt: string;
+  read: boolean;
 };

@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { TProperty } from 'type';
 
 const PropertyMap = ({ property }: { property: TProperty }) => {
-  const [lat, setLat] = useState(0);
-  const [lng, setLon] = useState(0);
+  const [lat, setLat] = useState<number | null>(null);
+  const [lng, setLon] = useState<number | null>(null);
 
   const url = process.env.NEXT_PUBLIC_LOCATIONIQ_URL;
   const apiKey = process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY;
@@ -30,15 +30,17 @@ const PropertyMap = ({ property }: { property: TProperty }) => {
   }, [url, apiKey, property.location.city, property.location.street]);
 
   useEffect(() => {
-    const map = new maplibregl.Map({
-      container: 'map',
-      style:
-        'https://tiles.locationiq.com/v3/streets/vector.json?key=pk.8f4156856d305e0199d10b06063887bd',
-      center: [lng, lat],
-      zoom: 12,
-    });
+    if (lat && lng) {
+      const map = new maplibregl.Map({
+        container: 'map',
+        style:
+          'https://tiles.locationiq.com/v3/streets/vector.json?key=pk.8f4156856d305e0199d10b06063887bd',
+        center: [lng, lat],
+        zoom: 12,
+      });
 
-    const marker = new maplibregl.Marker().setLngLat([lng, lat]).addTo(map);
+      const marker = new maplibregl.Marker().setLngLat([lng, lat]).addTo(map);
+    }
   }, [lng, lat]);
 
   return <div id='map' className='h-[400px] w-full'></div>;

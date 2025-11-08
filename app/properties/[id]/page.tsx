@@ -218,7 +218,7 @@ const PropertyPage = async ({
                   </Card>
                 </div>
                 {/* Right side */}
-                <aside className='flex-1/5 w-full mb-15 space-y-7'>
+                <aside className='flex-1/5 w-full space-y-7'>
                   <BookmarkButton property={serializedProperty} />
                   <ShareButtons property={serializedProperty} />
 

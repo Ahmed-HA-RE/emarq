@@ -23,6 +23,8 @@ export const proxy = async (request: NextRequest) => {
     return NextResponse.redirect(new URL('/', request.url));
   } else if (!session && request.nextUrl.pathname === '/properties/saved') {
     return NextResponse.redirect(new URL('/properties', request.url));
+  } else if (!session && request.nextUrl.pathname === '/messages') {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 };
 export const config = {
@@ -35,5 +37,6 @@ export const config = {
     '/properties/add',
     '/profile',
     '/properties/saved',
+    '/messages',
   ],
 };
