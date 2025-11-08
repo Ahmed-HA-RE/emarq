@@ -171,11 +171,14 @@ const Navbar = ({ session }: { session: Session | null }) => {
               size='icon'
               className='relative cursor-pointer bg-black/70 hover:bg-black/50  border-0 rounded-full transition'
               aria-label='Notifications'
+              asChild
             >
-              <BellIcon size={16} aria-hidden='true' color='#fff' />
-              <Badge className='h-5 min-w-5 max-w-8 rounded-full absolute -top-2.5 px-1 tabular-nums text-white -right-2  bg-red-600'>
-                2
-              </Badge>
+              <Link href='/messages'>
+                <BellIcon size={16} aria-hidden='true' color='#fff' />
+                <Badge className='h-5 min-w-5 max-w-8 rounded-full absolute -top-2.5 px-1 tabular-nums text-white -right-2  bg-red-600'>
+                  2
+                </Badge>
+              </Link>
             </Button>
             {/* User menu */}
             <UserMenu session={session} />

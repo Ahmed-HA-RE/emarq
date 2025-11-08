@@ -1,6 +1,9 @@
 import z from 'zod';
 
 export const messageSchema = z.object({
+  sender: z.string(),
+  reciver: z.string(),
+  property: z.string(),
   name: z
     .string({ error: 'Invalid Name' })
     .nonempty({ error: 'Name is required' })
@@ -15,5 +18,3 @@ export const messageSchema = z.object({
       error: 'Please provide a descriptive message of at least 10 characters',
     }),
 });
-
-export type Message = z.infer<typeof messageSchema>;

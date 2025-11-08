@@ -33,3 +33,13 @@ export type TUser = {
   avatar: string;
   bookmarks: TProperty[];
 };
+
+export type TMessage = {
+  sender: string;
+  reciver: string;
+  property: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+};

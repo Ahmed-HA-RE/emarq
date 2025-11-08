@@ -4,7 +4,6 @@ import type { TProperty } from 'type';
 import Image from 'next/image';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Check, Home } from 'lucide-react';
-import { FaShare } from 'react-icons/fa';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { FaArrowLeft, FaBath, FaBed, FaRuler } from 'react-icons/fa6';
@@ -32,6 +31,12 @@ const PropertyPage = async ({
 }) => {
   const { id } = await params;
   await connectDB();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const serializedSession = JSON.parse(JSON.stringify(session));
 
   const property = await Property.findById(id).lean();
   const serializedProperty: TProperty = JSON.parse(JSON.stringify(property));
@@ -217,7 +222,10 @@ const PropertyPage = async ({
                   <BookmarkButton property={serializedProperty} />
                   <ShareButtons property={serializedProperty} />
 
-                  <PropertyContactForm />
+                  <PropertyContactForm
+                    session={serializedSession}
+                    property={serializedProperty}
+                  />
                 </aside>
               </div>
               <PropertyImages images={serializedProperty.images} />
