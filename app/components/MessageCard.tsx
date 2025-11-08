@@ -25,11 +25,14 @@ import {
 } from './ui/alert-dialog';
 import { TriangleAlertIcon } from 'lucide-react';
 import deleteMessage from '@/actions/deleteMessage';
+import useMessageStore from '@/store/message';
 
 const MessageCard = ({ message }: { message: MessagesResults }) => {
   const [pending, setPending] = useState(false);
-  const [isRead, setIsRead] = useState(false);
+  const [isRead, setIsRead] = useState(message.read);
   const [modal, setModal] = useState(false);
+  const setAddCount = useMessageStore((state) => state.setAddCount);
+  const setRemoveCount = useMessageStore((state) => state.setRemoveCount);
 
   const handleReadToggle = async () => {
     try {
@@ -37,6 +40,12 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
       const read: boolean = await markMessage(message._id);
       setIsRead(read);
       successToast(read ? 'Message read' : 'Message is unread');
+
+      if (read) {
+        setRemoveCount();
+      } else {
+        setAddCount();
+      }
     } catch (error: any) {
       destructiveToast(error.message);
     } finally {
@@ -49,6 +58,7 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
       setPending(true);
       await deleteMessage(message._id);
       successToast('Message Deleted');
+      setRemoveCount();
     } catch (error: any) {
       destructiveToast(error.message);
     } finally {

@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from 'app/components/ui/popover';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo from '@/assets/images/logo-white.png';
 import { BellIcon } from 'lucide-react';
@@ -17,12 +17,19 @@ import { Separator } from '../ui/separator';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { auth } from '@/lib/auth';
+import useMessageStore from '@/store/message';
+import { countUnReadMessages } from '@/actions/getUnreadMessagesCount';
 
 type Session = typeof auth.$Infer.Session;
 
 const Navbar = ({ session }: { session: Session | null }) => {
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
+  const count = useMessageStore((state) => state.count);
+  console.log(count);
+  const setTotalUnreadMessages = useMessageStore(
+    (state) => state.setTotalUnreadMessages
+  );
 
   const baseLinks = [
     { href: '/', label: 'Home' },
@@ -34,6 +41,14 @@ const Navbar = ({ session }: { session: Session | null }) => {
     : [];
 
   const navigationLinks = [...baseLinks, ...authLinks];
+
+  useEffect(() => {
+    const getUnReadMessagesCount = async () => {
+      const totalCount = await countUnReadMessages();
+      setTotalUnreadMessages(totalCount);
+    };
+    getUnReadMessagesCount();
+  }, [count, setTotalUnreadMessages]);
 
   return (
     <nav className='px-4 md:px-6 py-2 bg-blue-700 border-b border-b-blue-500'>
@@ -175,9 +190,11 @@ const Navbar = ({ session }: { session: Session | null }) => {
             >
               <Link href='/messages'>
                 <BellIcon size={16} aria-hidden='true' color='#fff' />
-                <Badge className='h-5 min-w-5 max-w-8 rounded-full absolute -top-2.5 px-1 tabular-nums text-white -right-2  bg-red-600'>
-                  2
-                </Badge>
+                {count > 0 && (
+                  <Badge className='h-5 min-w-5 max-w-8 rounded-full absolute -top-2.5 px-1 tabular-nums text-white -right-2  bg-red-600'>
+                    {count}
+                  </Badge>
+                )}
               </Link>
             </Button>
             {/* User menu */}

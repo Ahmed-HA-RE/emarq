@@ -3,9 +3,8 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { Message } from 'models/Message';
 import connectDB from 'config/database';
-import { revalidatePath } from 'next/cache';
 
-export const markMessage = async (messageId: string) => {
+export const countUnReadMessages = async () => {
   await connectDB();
 
   const session = await auth.api.getSession({
@@ -16,15 +15,10 @@ export const markMessage = async (messageId: string) => {
     throw new Error('You must be logged in to be able to send messages');
   }
 
-  const message = await Message.findById(messageId);
+  const message = await Message.countDocuments({
+    receiver: session.user.id,
+    read: false,
+  });
 
-  if (!message) {
-    throw new Error('No message found');
-  }
-
-  message.read = !message.read;
-  await message.save();
-
-  revalidatePath('/messages', 'page');
-  return message.read;
+  return message;
 };
