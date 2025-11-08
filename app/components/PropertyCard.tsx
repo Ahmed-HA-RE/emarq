@@ -23,15 +23,17 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
     <div className='relative rounded-2xl pt-0 shadow-lg overflow-hidden'>
       <div className='flex h-70 md:h-64 lg:h-60 relative overflow-hidden'>
-        <Image
-          src={property.images[0]}
-          alt={property.name}
-          className='w-full rounded-t-2xl object-cover'
-          width={0}
-          height={0}
-          sizes='100%'
-          loading='eager'
-        />
+        <Link href={`/properties/${property._id}`}>
+          <Image
+            src={property.images[0]}
+            alt={property.name}
+            className='w-full rounded-t-2xl object-cover hover:scale-105 transition'
+            width={0}
+            height={0}
+            sizes='100%'
+            loading='eager'
+          />
+        </Link>
         <div className='flex flex-row items-center space-x-1 absolute top-4 right-2 bg-white shadow rounded-md p-2 px-3 text-blue-500 font-semibold'>
           <span className='dirham-symbol '>&#xea;</span>
           <p>{getPropertyRates(property.rates)}</p>

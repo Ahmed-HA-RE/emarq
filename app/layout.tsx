@@ -28,11 +28,13 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en'>
       <body className={poppins.className}>
-        {session && !session.user.emailVerified && <VerifyBanner />}
-        <Navbar session={JSON.parse(JSON.stringify(session))} />
-        <main>{children}</main>
-        <Footer />
-        <Toaster position='top-right' />
+        <div className='flex flex-col min-h-screen'>
+          {session && !session.user.emailVerified && <VerifyBanner />}
+          <Navbar session={JSON.parse(JSON.stringify(session))} />
+          <main className='flex-grow'>{children}</main>
+          <Footer />
+          <Toaster position='top-right' />
+        </div>
       </body>
     </html>
   );
