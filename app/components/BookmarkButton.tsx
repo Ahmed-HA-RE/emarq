@@ -12,6 +12,7 @@ import checkBookmark from '@/actions/checkBookmark';
 const BookmarkButton = ({ property }: { property: TProperty }) => {
   const [pending, setPending] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  console.log(isBookmarked);
 
   const handleBookmark = async () => {
     try {

@@ -29,10 +29,7 @@ const bookmarkProperty = async (propertyId: string) => {
     message = 'Bookmark Removed';
     isBookMarked = false;
   } else {
-    const bookmarksProperties = [
-      ...session.user.bookmarks,
-      new mongoose.Types.ObjectId(propertyId),
-    ];
+    const bookmarksProperties = [...session.user.bookmarks, propertyId];
     message = 'Bookmark Added';
     isBookMarked = true;
     await updateUser(bookmarksProperties as string[]);

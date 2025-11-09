@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button';
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -15,7 +14,6 @@ import { useForm, Controller } from 'react-hook-form';
 import Link from 'next/link';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
 import { signInUser, signWithSocials } from '@/actions/auth';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from 'next/navigation';
@@ -35,25 +33,19 @@ const SignInForm = () => {
   });
 
   const handleSocialsSignIn = async (provider: 'github' | 'google') => {
-    try {
-      await signWithSocials(provider);
-      setTimeout(() => router.push('/'), 1000);
-    } catch (error: any) {
-      destructiveToast(error.message);
-    }
+    await signWithSocials(provider);
   };
 
   const onSubmit = async (data: LoginUser) => {
-    try {
-      setIsPending(true);
-      const result = await signInUser(data);
-      successToast(result.message);
-      setTimeout(() => router.push('/'), 1000);
-    } catch (error: any) {
-      destructiveToast(error.message);
-    } finally {
+    setIsPending(true);
+    const result = await signInUser(data);
+    if (!result.success) {
+      destructiveToast(result.message);
       setIsPending(false);
+      return;
     }
+    successToast(result.message);
+    setTimeout(() => router.push('/'), 1000);
   };
 
   return (
