@@ -35,7 +35,7 @@ const bookmarkProperty = async (propertyId: string) => {
     ];
     message = 'Bookmark Added';
     isBookMarked = true;
-    await updateUser(bookmarksProperties);
+    await updateUser(bookmarksProperties as string[]);
   }
 
   revalidatePath('/properties/saved', 'page');

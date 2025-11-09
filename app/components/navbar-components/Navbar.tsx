@@ -26,7 +26,6 @@ const Navbar = ({ session }: { session: Session | null }) => {
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
   const count = useMessageStore((state) => state.count);
-  console.log(count);
   const setTotalUnreadMessages = useMessageStore(
     (state) => state.setTotalUnreadMessages
   );

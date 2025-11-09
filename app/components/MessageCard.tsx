@@ -34,6 +34,8 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
   const setAddCount = useMessageStore((state) => state.setAddCount);
   const setRemoveCount = useMessageStore((state) => state.setRemoveCount);
 
+  console.log(message);
+
   const handleReadToggle = async () => {
     try {
       setPending(true);
@@ -73,7 +75,9 @@ const MessageCard = ({ message }: { message: MessagesResults }) => {
         <CardHeader className='px-4 '>
           <CardTitle className='!text-xl md:!text-2xl leading-8'>
             Property Inquiry:{' '}
-            <span className='font-normal'>{message.property.name}</span>
+            <span className='font-normal'>
+              {message.property?.name || 'Property Deleted'}
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className='text-base px-4'>
