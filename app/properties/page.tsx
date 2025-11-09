@@ -36,7 +36,7 @@ const PropertiesPage = async ({
             ))}
           </div>
         )}
-        <PaginationButtons currentPage={page} totalPages={totalPages} />
+        <PaginationButtons page={page} totalPages={totalPages} />
       </div>
     </section>
   );

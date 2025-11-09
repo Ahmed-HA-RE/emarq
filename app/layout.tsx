@@ -7,6 +7,7 @@ import { Toaster } from 'sonner';
 import { auth } from './lib/auth';
 import { headers } from 'next/headers';
 import VerifyBanner from './components/VerifyBanner';
+import 'photoswipe/dist/photoswipe.css';
 
 const poppins = Poppins({
   subsets: ['latin'],

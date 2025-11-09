@@ -2,71 +2,43 @@ import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from 'app/components/ui/pagination';
 
-import { cn } from 'app/lib/utils';
-
 type PaginationButtonsProps = {
-  currentPage: number;
+  page: number;
   totalPages: number;
 };
 
-const PaginationButtons = ({
-  totalPages,
-  currentPage,
-}: PaginationButtonsProps) => {
-  const totalPagesArr = Array.from({ length: totalPages }, (_, i) => i + 1);
-
+const PaginationButtons = ({ totalPages, page }: PaginationButtonsProps) => {
   return (
     <Pagination className='mt-10'>
-      <PaginationContent className=' gap-0 overflow-hidden rounded-lg border'>
-        {currentPage > 1 ? (
+      <PaginationContent className='w-full  max-w-2xl gap-8 justify-center items-center'>
+        {page > 1 ? (
           <PaginationItem>
             <PaginationPrevious
-              href={`/properties?page=${currentPage - 1}`}
-              className='rounded-none'
+              href={`/properties?page=${page - 1}`}
+              className='border bg-blue-500 text-white hover:bg-blue-600'
             />
           </PaginationItem>
         ) : null}
-        {totalPagesArr.map((page) => {
-          const isActive = page === currentPage;
-
-          return (
-            <PaginationItem key={page}>
-              <PaginationLink
-                href={`/properties?page=${page}`}
-                className={cn(
-                  'bg-gray-200',
-                  'text-black',
-                  'hover:bg-blue-500',
-                  'hover:text-white',
-                  'border',
-                  isActive && 'bg-blue-500 text-white',
-                  'rounded-none border-none'
-                )}
-                isActive={isActive}
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          );
-        })}
-        <PaginationContent className='gap-0 divide-x overflow-hidden rounded-none'>
-          {currentPage < totalPages ? (
-            <PaginationItem>
-              <PaginationNext
-                href={`/properties?page=${currentPage + 1}`}
-                className='rounded-none'
-              />
-            </PaginationItem>
-          ) : null}
-        </PaginationContent>
+        <PaginationItem>
+          <p className='text-muted-foreground text-sm' aria-live='polite'>
+            Page <span className='text-foreground'>{page}</span> of{' '}
+            <span className='text-foreground'>{totalPages}</span>
+          </p>
+        </PaginationItem>
+        {page < totalPages ? (
+          <PaginationItem>
+            <PaginationNext
+              href={`/properties?page=${page + 1}`}
+              className='border bg-blue-500 text-white hover:bg-blue-600'
+            />
+          </PaginationItem>
+        ) : null}
       </PaginationContent>
     </Pagination>
   );
 };
-
 export default PaginationButtons;
