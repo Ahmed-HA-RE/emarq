@@ -19,6 +19,21 @@ export const metadata: Metadata = {
   title: 'Emarq',
   description:
     'Discover premium properties across the Emirates with Emarq. Your trusted destination for buying, selling, and renting homes in the UAE.',
+  openGraph: {
+    title: 'Emarq',
+    description:
+      'Discover premium properties across the Emirates with Emarq. Your trusted destination for buying, selling, and renting homes in the UAE.',
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_PROD_APP}/static/logo.png`,
+        width: 800,
+        height: 600,
+        alt: 'Emarq Logo',
+      },
+    ],
+    type: 'website',
+    siteName: 'Emarq',
+  },
 };
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {

@@ -11,12 +11,8 @@ export const countUnReadMessages = async () => {
     headers: await headers(),
   });
 
-  if (!session) {
-    throw new Error('You must be logged in to be able to send messages');
-  }
-
   const message = await Message.countDocuments({
-    receiver: session.user.id,
+    receiver: session?.user.id,
     read: false,
   });
 

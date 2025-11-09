@@ -12,52 +12,60 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const signUpUser = async (values: RegisterUser) => {
-  const result = registerUserSchema.safeParse(values);
+  try {
+    const result = registerUserSchema.safeParse(values);
 
-  if (!result.success) {
-    throw new Error('Invalid Data');
+    if (!result.success) {
+      throw new Error('Invalid Data');
+    }
+
+    const { email, name, password } = result.data;
+
+    await auth.api.signUpEmail({
+      body: {
+        email,
+        name,
+        password,
+        bookmarks: [],
+        callbackURL: '/verify',
+      },
+      headers: await headers(),
+    });
+
+    return {
+      message:
+        'Registration successful. A confirmation email has been sent to your inbox.',
+    };
+  } catch (error: any) {
+    return { success: false, message: error.message };
   }
-
-  const { email, name, password } = result.data;
-
-  await auth.api.signUpEmail({
-    body: {
-      email,
-      name,
-      password,
-      bookmarks: [],
-      callbackURL: '/verify',
-    },
-    headers: await headers(),
-  });
-
-  return {
-    message:
-      'Registration successful. A confirmation email has been sent to your inbox.',
-  };
 };
 
 export const signInUser = async (values: LoginUser) => {
-  const result = loginUserSchema.safeParse(values);
+  try {
+    const result = loginUserSchema.safeParse(values);
 
-  if (!result.success) {
-    throw new Error('Invalid Data');
+    if (!result.success) {
+      throw new Error('Invalid Data');
+    }
+
+    const { email, password } = result.data;
+
+    await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+        callbackURL: '/',
+      },
+      headers: await headers(),
+    });
+
+    return {
+      message: 'Welcome back! You’re now logged in.',
+    };
+  } catch (error: any) {
+    return { success: false, message: error.message };
   }
-
-  const { email, password } = result.data;
-
-  await auth.api.signInEmail({
-    body: {
-      email,
-      password,
-      callbackURL: '/',
-    },
-    headers: await headers(),
-  });
-
-  return {
-    message: 'Welcome back! You’re now logged in.',
-  };
 };
 
 export const requestForgotPass = async (value: string) => {

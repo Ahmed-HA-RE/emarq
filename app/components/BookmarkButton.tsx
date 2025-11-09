@@ -8,22 +8,22 @@ import bookmarkProperty from '@/actions/bookmarkProperty';
 import { useEffect, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import checkBookmark from '@/actions/checkBookmark';
+import { useTransition } from 'react';
 
 const BookmarkButton = ({ property }: { property: TProperty }) => {
-  const [pending, setPending] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [isBookmarked, setIsBookmarked] = useState<boolean | undefined>(false);
 
   const handleBookmark = async () => {
-    try {
-      setPending(true);
-      const { message, isBookMarked } = await bookmarkProperty(property._id);
-      successToast(message);
-      setIsBookmarked(isBookMarked);
-    } catch (error: any) {
-      destructiveToast(error.message);
-    } finally {
-      setPending(false);
-    }
+    startTransition(async () => {
+      const result = await bookmarkProperty(property._id);
+      if (result.success) {
+        successToast(result.message);
+        setIsBookmarked(result.isBookMarked);
+      } else {
+        destructiveToast(result.message);
+      }
+    });
   };
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const BookmarkButton = ({ property }: { property: TProperty }) => {
 
   return (
     <>
-      {pending && <ScreenSpinner />}
+      {isPending && <ScreenSpinner />}
       {isBookmarked ? (
         <Button
           size={'lg'}

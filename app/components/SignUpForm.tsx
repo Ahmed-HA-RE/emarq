@@ -35,16 +35,15 @@ const SignupForm = () => {
   });
 
   const onSubmit = async (data: RegisterUser) => {
-    try {
-      setIsPending(true);
-      const result = await signUpUser(data);
-      successToast(result.message);
-      setTimeout(() => router.push('/'), 1000);
-    } catch (error: any) {
-      destructiveToast(error.message);
-    } finally {
+    setIsPending(true);
+    const result = await signUpUser(data);
+    if (!result.success) {
+      destructiveToast(result.message);
       setIsPending(false);
+      return;
     }
+    successToast(result.message);
+    setTimeout(() => router.push('/'), 1000);
   };
   return (
     <>

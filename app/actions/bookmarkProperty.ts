@@ -4,42 +4,42 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { updateUser } from './auth';
 import { revalidatePath } from 'next/cache';
-import mongoose from 'mongoose';
 
 const bookmarkProperty = async (propertyId: string) => {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  if (!session) {
-    throw new Error(
-      'You need to be logged in in order to bookmark this property'
-    );
+    if (!session) {
+      throw new Error(
+        'You need to be logged in in order to bookmark this property'
+      );
+    }
+
+    let isBookMarked = session.user.bookmarks.includes(propertyId);
+    let message;
+
+    if (isBookMarked) {
+      await updateUser(
+        session.user.bookmarks.filter((bookmark) => bookmark !== propertyId)
+      );
+      message = 'Bookmark Removed';
+      isBookMarked = false;
+    } else {
+      const bookmarksProperties = [...session.user.bookmarks, propertyId];
+      message = 'Bookmark Added';
+      isBookMarked = true;
+      await updateUser(bookmarksProperties as string[]);
+    }
+
+    revalidatePath('/properties/saved', 'page');
+    return { success: true, message, isBookMarked };
+  } catch (error) {
+    return { success: false, message: (error as Error).message };
   }
-
-  let isBookMarked = session.user.bookmarks.includes(propertyId);
-  let message;
-
-  if (isBookMarked) {
-    await updateUser(
-      session.user.bookmarks.filter((bookmark) => bookmark !== propertyId)
-    );
-    message = 'Bookmark Removed';
-    isBookMarked = false;
-  } else {
-    const bookmarksProperties = [
-      ...session.user.bookmarks,
-      new mongoose.Types.ObjectId(propertyId),
-    ];
-    message = 'Bookmark Added';
-    isBookMarked = true;
-    await updateUser(bookmarksProperties as string[]);
-  }
-
-  revalidatePath('/properties/saved', 'page');
-  return { message, isBookMarked };
 };
 
 export default bookmarkProperty;
