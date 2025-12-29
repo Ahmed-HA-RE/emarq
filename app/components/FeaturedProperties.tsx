@@ -26,21 +26,21 @@ const FeaturedProperties = async () => {
         <h2 className='text-3xl text-blue-500 font-bold text-center mb-6'>
           Featured Properties
         </h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           {featuredProperties.map((property) => (
-            <Card key={property._id} className='w-full py-0 sm:flex-row gap-4'>
-              <CardContent className='grow-1 px-0'>
+            <Card key={property._id} className='w-full py-0 lg:flex-row gap-4'>
+              <CardContent className='grow-1 px-0 h-64'>
                 <Image
                   src={property.images[0]}
                   alt={property.name}
-                  className='size-full rounded-l-xl'
+                  className='w-full h-64 rounded-xl lg:rounded-l-xl lg:rounded-r-none'
                   width={0}
                   height={0}
                   sizes='100vw'
                 />
               </CardContent>
               <div className='sm:min-w-72 flex flex-col justify-center '>
-                <CardHeader className='md:pt-6 md:px-0 w-full gap-4'>
+                <CardHeader className='md:pt-6 lg:px-0 w-full gap-4'>
                   <div>
                     <CardTitle className='text-xl'>{property.name}</CardTitle>
                     <small className='text-gray-500 font-bold'>
@@ -51,7 +51,7 @@ const FeaturedProperties = async () => {
                     {property.description}
                   </CardDescription>
                 </CardHeader>
-                <CardFooter className='py-4 w-full md:px-0 md:pr-4'>
+                <CardFooter className='py-4 w-full lg:px-0 lg:pr-4'>
                   <Button
                     asChild
                     className='bg-transparent bg-gradient-to-br from-purple-500 to-pink-500 text-white focus-visible:ring-pink-600/20 w-full'
